@@ -270,6 +270,25 @@ p { margin: 0; }
 .pick .pick-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
 .pick .pick-photo:hover img { transform: scale(1.04); }
 .pick h4 { font: 500 1.02rem/1.25 var(--display); color: var(--wine); min-height: 2.5em; }
+/* Dil seçici */
+.lang { display: flex; align-items: center; gap: 2px; border: 1px solid rgba(247,236,230,.28); border-radius: 999px; padding: 2px; }
+.lang button { font: 500 .78rem/1 var(--body); color: var(--on-wine-soft); background: none; border: 0; border-radius: 999px; padding: 7px 9px; min-width: 32px; cursor: pointer; letter-spacing: .04em; }
+.lang button[lang="ar"] { font: 600 .95rem/1 "Tajawal", sans-serif; padding: 5px 9px 6px; }
+.lang button[aria-pressed="true"] { background: var(--on-wine); color: var(--wine); }
+.lang button:focus-visible { outline: 2px solid var(--on-wine); outline-offset: 1px; }
+/* Arapça: sağdan sola, Arapça yazı tipleri; harf aralığı ve italik Arapça harflerin birleşmesini bozduğu için kapalı */
+html[lang="ar"] { --display: "Amiri", "Playfair Display", serif; --body: "Tajawal", "Jost", sans-serif; }
+html[lang="ar"] body *:not(.logo):not(.wordmark):not(.wordmark *):not(.swatch span):not(.lang button) { letter-spacing: 0 !important; font-style: normal !important; }
+/* Loçka yazısı (harf harf animasyonlu) her dilde soldan sağa okunur */
+html[lang="ar"] .wordmark, html[lang="ar"] .logo, html[lang="ar"] .swatch span { direction: ltr; unicode-bidi: isolate; }
+html[lang="ar"] .wordmark { margin: 0 0 26px -.16em; text-align: right; }
+html[lang="ar"] .tag { margin-left: 0; margin-right: 8px; }
+html[lang="ar"] p, html[lang="ar"] li, html[lang="ar"] dd { line-height: 1.85; }
+/* Telefonda üst çubuk sığsın: Ziyaret bağlantısı Menü'nün içinde de var */
+@media (max-width: 560px) {
+  .nav .btn.solid { display: none; }
+  .lang button { padding: 6px 7px; min-width: 28px; }
+}
 .picks-row, .menu-tabs { scrollbar-width: none; }
 .picks-row::-webkit-scrollbar, .menu-tabs::-webkit-scrollbar { display: none; }
 .pick .price { color: var(--red); font-weight: 500; font-size: .95rem; }
@@ -437,6 +456,11 @@ footer a { color: var(--on-wine); }
       <a href="#hikaye">Hikâyemiz</a>
       <a href="#butik">Butik</a>
       <a href="#davetler">Davetler</a>
+      <div class="lang" role="group" aria-label="Dil / Language / اللغة">
+        <button type="button" data-lang="tr" lang="tr" aria-pressed="true">TR</button>
+        <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ar" lang="ar" aria-pressed="false" aria-label="العربية">ع</button>
+      </div>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobileNav">Menü</button>
       <a class="btn solid" href="#ziyaret" style="padding:8px 18px;font-size:.9rem">Ziyaret</a>
     </nav>
@@ -893,6 +917,8 @@ footer a { color: var(--on-wine); }
         c.items.forEach(function (i) {
           if (i.visible === false) return;
           var text = norm(i.name + ' ' + (i.desc || '') + ' ' + c.name + (tag(i) ? ' paylasimlik' : ''));
+          // Seçili dil İngilizce ya da Arapçaysa o dildeki ad ve açıklamada da arar
+          if (window.__L) text += ' ' + norm(window.__L(i.name) + ' ' + window.__L(i.desc || '') + ' ' + window.__L(c.name));
           if (terms.some(function (t) { return text.indexOf(t) >= 0; })) hits.push([i, c.name]);
         });
       });
@@ -1114,6 +1140,371 @@ footer a { color: var(--on-wine); }
   window.__revealRefresh = function () { markReveal(); revealCheck(); };
   // Hikâye fotoğrafı hafif yakınlaşır
   gsap.fromTo('.story-photo img', { scale: 1.12 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: 0.6 } });
+})();
+</script>
+<script>
+/* Dil: Türkçe (asıl), İngilizce, Arapça. Sözlük birebir çeviri değil, anlam ve ton korunarak yerelleştirildi.
+   Marka ve ürün adları (Loçka, Opera Cake, GYA, Bow Collection…) ve "Canım / Tatlım / Hayatım" çevrilmez. */
+(function () {
+  var S = [
+    // [Türkçe, English, العربية]
+    ['Sofra', 'The Table', 'المائدة'],
+    ['Menü', 'Menu', 'القائمة'],
+    ['Moktailler', 'Mocktails', 'الموكتيل'],
+    ['Hikâyemiz', 'Our Story', 'قصتنا'],
+    ['Butik', 'Boutique', 'البوتيك'],
+    ['Davetler', 'Events', 'المناسبات'],
+    ['Ziyaret', 'Visit', 'زورونا'],
+    ['Vitrin', 'Pastry Showcase', 'واجهة الحلويات'],
+    ['Menü ve fiyatlar', 'Menu & prices', 'القائمة والأسعار'],
+    ['Ziyaret ve yol tarifi', 'Visit & directions', 'الزيارة والاتجاهات'],
+    ['Ana menü', 'Main menu', 'القائمة الرئيسية'],
+    ['Bölümler', 'Sections', 'الأقسام'],
+    ["Loçka'dan güzel yaşamın detayları.", 'The finer details of beautiful living, from Loçka.', 'تفاصيل الحياة الجميلة، من Loçka.'],
+    ['Kahvaltınızı kendi tasarladığımız porselenlerde hazırlıyor, tatlılarımızı Fransız pâtisserie geleneğiyle özenle yapıyoruz. Sofrada gözünüze takılan bir fincan olursa, butiğimizde sizi bekliyor.',
+      'We serve breakfast on porcelain of our own design and make our desserts with care, in the French pâtisserie tradition. If a cup at your table catches your eye, you will find it waiting in our boutique.',
+      'نقدّم الفطور على خزفٍ من تصميمنا، ونُعدّ حلوياتنا بعناية على طريقة الباتيسري الفرنسية. وإن لفت نظركم فنجانٌ على المائدة، فستجدونه بانتظاركم في البوتيك.'],
+    ['Sofraya bakın', 'Explore the table', 'اكتشفوا المائدة'],
+    ['Bizi ziyaret edin', 'Visit us', 'تفضّلوا بزيارتنا'],
+    ["Şu an açığız, 22.00'ye kadar", 'Open now, until 10 pm', 'مفتوح الآن حتى العاشرة مساءً'],
+    ["Bugün 08.00'de açıyoruz", 'Opening today at 8 am', 'نفتح اليوم الساعة الثامنة صباحًا'],
+    ["Yarın 08.00'de açıyoruz", 'Opening tomorrow at 8 am', 'نفتح غدًا الساعة الثامنة صباحًا'],
+    ['Sofranın üç hali', 'Three moods of the table', 'ثلاثة وجوه للمائدة'],
+    ['Sevdiklerimize seslenirken kullandığımız üç kelime; Loçka sofrasının üç hali.',
+      'Canım, Tatlım, Hayatım: three Turkish words of affection, meaning “my dear”, “my sweet” and “my love”. Three sides of the Loçka table.',
+      'ثلاث كلمات تركية نخاطب بها من نحب: ⁨Canım⁩ أي «عزيزي»، و ⁨Tatlım⁩ أي «حلوتي»، و ⁨Hayatım⁩ أي «حياتي». ثلاثة وجوه لمائدة ⁨Loçka⁩.'],
+    // Arapçada soldan sağa okunması gereken parçalar (kullanıcı adı, adres, telif) yalıtılır
+    ['@lockahome', '@lockahome', '⁦@lockahome⁩'],
+    ['Marmara Mah. Hürriyet Bulvarı, Kocatepe Cad. No: 132E', 'Marmara Mah. Hürriyet Bulvarı, Kocatepe Cad. No: 132E', '⁦Marmara Mah. Hürriyet Bulvarı, Kocatepe Cad. No: 132E⁩'],
+    ['Yakuplu, Beylikdüzü / İstanbul', 'Yakuplu, Beylikdüzü / İstanbul', '⁦Yakuplu, Beylikdüzü / İstanbul⁩'],
+    ['© 2026 Loçka Home & Pâtisserie, Beylikdüzü', '© 2026 Loçka Home & Pâtisserie, Beylikdüzü', '⁦© 2026 Loçka Home & Pâtisserie, Beylikdüzü⁩'],
+    ['Kahvaltı', 'Breakfast', 'الفطور'],
+    ['Tek kişilik Maison Kahvaltı: peynirler, zeytinler, mevsim yeşillikleri, haşlanmış yumurta, reçeller, tereyağı ve ekmek sepeti. İki kişiyseniz gümüş tepsilerde Signature Breakfast Plate.',
+      'The Maison Breakfast for one: cheeses, olives, seasonal greens, a boiled egg, preserves, butter and a bread basket. For two, the Signature Breakfast Plate arrives on silver trays.',
+      'فطور Maison لشخص واحد: أجبان وزيتون وخضار موسمية وبيضة مسلوقة ومربيات وزبدة وسلة خبز. ولشخصين، يُقدَّم Signature Breakfast Plate على صوانٍ فضية.'],
+    ['Maison 750 ₺, Signature iki kişilik 1.500 ₺', 'Maison 750 ₺ · Signature for two 1.500 ₺', 'Maison ‏750 ₺ · Signature لشخصين 1.500 ₺'],
+    ['Pâtisserie', 'Pâtisserie', 'الباتيسري'],
+    ['Choux, Opera, Paris-Brest, Snickers. Fransız pâtisserie geleneğiyle, vitrinimizde.',
+      'Choux, Opera, Paris-Brest, Snickers: made in the French pâtisserie tradition and waiting in our showcase.',
+      'شو، أوبرا، باريس-بريست، سنيكرز: حلويات على الطريقة الفرنسية تنتظركم في واجهتنا.'],
+    ["Dilimler 280 ₺'den, bütün pastalar 2.700 ₺'den", 'Slices from 280 ₺, whole cakes from 2.700 ₺', 'الشريحة من 280 ₺، والكعكة الكاملة من 2.700 ₺'],
+    ['Evinize taşıyın', 'Take it home', 'خذوها إلى منزلكم'],
+    ["Kahvaltınızı yaptığınız tabak, kahvenizi içtiğiniz fincan. Kırmızı çiçek desenli porselenleri, el yapımı Türk kahvesi fincanlarını ve Bow Collection'ı kendimiz tasarlıyoruz.",
+      'The plate you had breakfast on, the cup you drank your coffee from. We design our red floral porcelain, handmade Turkish coffee cups and the Bow Collection ourselves.',
+      'الطبق الذي تناولتم عليه فطوركم، والفنجان الذي شربتم منه قهوتكم. نصمّم بأنفسنا خزفنا المزيّن بالزهور الحمراء، وفناجين القهوة التركية المصنوعة يدويًا، ومجموعة Bow Collection.'],
+    ['Hepsi butiğimizde', 'All in our boutique', 'كلها في البوتيك'],
+    ['Vitrine bakın', 'See the showcase', 'شاهدوا الواجهة'],
+    ['Butiğe bakın', 'Visit the boutique', 'تصفّحوا البوتيك'],
+    ['Vitrinden', 'From the showcase', 'من الواجهة'],
+    ['Dilim olarak masanızda, bütün olarak kutlamalarınızda. Vitrin güne göre değişir.',
+      'By the slice at your table, whole for your celebrations. The showcase changes daily.',
+      'شرائح على طاولتكم، وكعكات كاملة لاحتفالاتكم. تتغيّر الواجهة يوميًا.'],
+    ['Bütün pastalar', 'Whole cakes', 'الكعكات الكاملة'],
+    ['Bütün Pastalar', 'Whole Cakes', 'الكعكات الكاملة'],
+    ['2–4 kişilik', 'Serves 2–4', 'لـ 2–4 أشخاص'],
+    ['6–8 kişilik', 'Serves 6–8', 'لـ 6–8 أشخاص'],
+    ['8–12 kişilik', 'Serves 8–12', 'لـ 8–12 شخصًا'],
+    ['Sipariş için yazın', 'Message us to order', 'راسلونا للطلب'],
+    ['Sofralarımızdan', 'From our tables', 'من موائدنا'],
+    ["Instagram'da takip edin", 'Follow us on Instagram', 'تابعونا على إنستغرام'],
+    ['Vitrinden ve mutfaktan', 'From the showcase and the kitchen', 'من الواجهة والمطبخ'],
+    ['Loçka’da öne çıkanlar', 'Loçka favourites', 'مختارات Loçka'],
+    ['Menüde ara: çikolata, glutensiz, latte…', 'Search the menu: chocolate, gluten-free, latte…', 'ابحثوا في القائمة: شوكولاتة، خالٍ من الغلوتين، لاتيه…'],
+    ['Menüde ara', 'Search the menu', 'البحث في القائمة'],
+    ['Menü kategorileri', 'Menu categories', 'أقسام القائمة'],
+    ['Bu aramayla eşleşen ürün bulamadık. Başka bir kelime deneyin.', 'Nothing on the menu matches your search. Try another word.', 'لا توجد أصناف تطابق بحثكم. جرّبوا كلمة أخرى.'],
+    ['Paylaşımlık', 'To share', 'للمشاركة'],
+    ['Cookies', 'Cookies', 'الكوكيز'],
+    ['Sıcaklar', 'Hot dishes', 'الأطباق الساخنة'],
+    ['Salata ve sandviç', 'Salads & sandwiches', 'السلطات والسندويشات'],
+    ['Kahveler', 'Coffee', 'القهوة'],
+    ['Çaylar', 'Tea', 'الشاي'],
+    ['Soğuk içecekler', 'Cold drinks', 'المشروبات الباردة'],
+    ['Bar', 'Bar', 'البار'],
+    ["Loçka'nın alkolsüz kokteylleri. Her biri kendi rengi ve süsüyle hazırlanır.", "Loçka's alcohol-free cocktails, each with its own colour and garnish.", 'كوكتيلات Loçka الخالية من الكحول، لكلٍّ منها لونه وزينته الخاصة.'],
+    ['Moktailleri menüde görün', 'See the mocktails on the menu', 'شاهدوا الموكتيل في القائمة'],
+    ['“Canım,', '“My dear,', '«عزيزي،'],
+    ['tatlım,', 'my sweet,', 'حلوتي،'],
+    ['hayatım.”', 'my love.”', 'حياتي.»'],
+    ['“Canım, tatlım, hayatım.”', '“My dear, my sweet, my love.”', '«عزيزي، حلوتي، حياتي.»'],
+    ['Sevdiklerimize seslenirken kullandığımız bu kelimeyi, en sevdiğimiz şeye ad olarak verdik: özenle kurulmuş bir sofraya ve o sofrada sizi ağırlamaya.',
+      'Loçka is a word we use for the people we love. We gave it to what we love most: a carefully set table, and welcoming you to it.',
+      'Loçka كلمةٌ نخاطب بها من نحب، فأطلقناها على أحبّ الأشياء إلينا: مائدةٍ أُعدّت بعناية، واستقبالكم حولها.'],
+    ["Loçka, iki kardeşin ev dekorasyonu tutkusuyla doğdu. Sofralarımızdaki kırmızı çiçek desenli tabakları, el yapımı Türk kahvesi fincanlarını ve Bow Collection'ı kendimiz tasarlıyoruz.",
+      'Loçka grew out of two siblings’ love of home décor. The red floral plates, handmade Turkish coffee cups and Bow Collection on our tables are all our own designs.',
+      'وُلدت Loçka من شغف شقيقين بديكور المنزل. الأطباق المزيّنة بالزهور الحمراء وفناجين القهوة التركية المصنوعة يدويًا ومجموعة Bow Collection التي ترونها على موائدنا كلها من تصميمنا.'],
+    ["Mağazamızın yanına Loçka Pâtisserie'yi ekledik. Artık kahvaltınızı yaptığınız tabağı, kahvenizi içtiğiniz fincanı evinize de götürebilirsiniz.",
+      'Next to our store we opened Loçka Pâtisserie, so the plate you breakfast on and the cup you sip from can now come home with you.',
+      'وإلى جانب متجرنا افتتحنا Loçka Pâtisserie، لتأخذوا معكم إلى المنزل الطبقَ الذي تناولتم عليه فطوركم والفنجانَ الذي شربتم منه قهوتكم.'],
+    ['Beautiful things to live with.', 'Beautiful things to live with.', 'أشياء جميلة ترافقكم في حياتكم.'],
+    ['Dekorasyon butiği', 'Décor boutique', 'بوتيك الديكور'],
+    ['Sofradakini evinize taşıyın', 'Bring the table home', 'خذوا المائدة إلى منزلكم'],
+    ["Loçka'nın kendi tasarımı porselenleri ve gümüşleri, kokulu mumlar, solmayan çiçekler ve Loçka kutularında hediyelik setler. Hepsi mağazamızda, sofralarımızda kullandığımız haliyle.",
+      "Loçka's own porcelain and silverware, scented candles, everlasting flowers and gift sets in Loçka boxes: all in our store, just as we use them at our tables.",
+      'خزفٌ وفضيات من تصميم Loçka، وشموع معطّرة، وزهور دائمة، وهدايا في علب Loçka؛ كلها في متجرنا كما نستخدمها على موائدنا.'],
+    ['Porselen ve gümüş', 'Porcelain & silver', 'الخزف والفضيات'],
+    ['Kendi tasarımımız kırmızı çiçek desenli tabaklar, el yapımı Türk kahvesi fincanları, Bow Collection ve Loçka gümüş yemek takımları.',
+      'Our own red floral plates, handmade Turkish coffee cups, the Bow Collection and Loçka silver cutlery.',
+      'أطباق من تصميمنا مزيّنة بالزهور الحمراء، وفناجين قهوة تركية مصنوعة يدويًا، ومجموعة Bow Collection، وأطقم مائدة فضية من Loçka.'],
+    ['Mumlar ve ev kokuları', 'Candles & home fragrance', 'الشموع وعطور المنزل'],
+    ["El yapımı camlarda GYA Candle Art mumları ve Cote Noire'ın çiçekli ev kokuları.", "GYA Candle Art candles in handmade glass and Cote Noire's floral home fragrances.", 'شموع GYA Candle Art في أوعية زجاجية مصنوعة يدويًا، وعطور Cote Noire الزهرية للمنزل.'],
+    ['Solmayan çiçekler', 'Everlasting flowers', 'زهور دائمة'],
+    ['Vazoda güller, şakayıklar ve ortancalar. Masanıza göre hazırlanır.', 'Roses, peonies and hydrangeas in vases, arranged to suit your table.', 'ورود وفاوانيا وكوبية في مزهريات، تُنسَّق بما يناسب مائدتكم.'],
+    ['Çikolata ve hediye kutuları', 'Chocolates & gift boxes', 'الشوكولاتة وعلب الهدايا'],
+    ['Loçka kutularında çikolata, hurma ve badem şekeri.', 'Chocolates, dates and sugared almonds in Loçka boxes.', 'شوكولاتة وتمور ولوز مُلبّس في علب Loçka.'],
+    ["Ürünleri mağazamızda görebilir, Instagram'dan mesaj göndererek sipariş verebilirsiniz. Kargoyla gönderim de yapıyoruz.",
+      'See the pieces in our store, or order by sending us a message on Instagram. We also ship.',
+      'يمكنكم مشاهدة المنتجات في متجرنا أو الطلب برسالة على إنستغرام، كما نوفّر الشحن.'],
+    ['Mağazamızdaki markalar', 'Brands in our store', 'العلامات التجارية في متجرنا'],
+    ['Davetler ve özel siparişler', 'Events & special orders', 'المناسبات والطلبات الخاصة'],
+    ['Kutlamalarınızı birlikte hazırlayalım', "Let's plan your celebration together", 'لنُحضّر احتفالكم معًا'],
+    ["Doğum günleri, nişanlar, baby shower'lar ve şirket davetleri için tatlı masaları, kişiye özel menüler ve hediye kutuları. Davetinizi anlatmanız yeterli; menüsünden masadaki çiçeklere kadar gerisini sizin zevkinize göre biz düşünelim.",
+      'Dessert tables, bespoke menus and gift boxes for birthdays, engagements, baby showers and company events. Just tell us about your occasion; we will take care of the rest to your taste, from the menu to the flowers on the table.',
+      'طاولات حلويات وقوائم طعام مخصّصة وعلب هدايا لأعياد الميلاد والخطوبة واستقبال المواليد ومناسبات الشركات. يكفي أن تخبرونا عن مناسبتكم، ونتولّى الباقي حسب ذوقكم، من قائمة الطعام إلى زهور الطاولة.'],
+    ["Instagram'dan yazın", 'Message us on Instagram', 'راسلونا على إنستغرام'],
+    ['Davet menüsü', 'Event menu', 'قائمة المناسبات'],
+    ['Doğum günü, nişan ya da şirket davetleri için kişi başı menü: 2.000 ₺.', 'A per-person menu for birthdays, engagements and company events: 2.000 ₺.', 'قائمة للشخص الواحد لأعياد الميلاد والخطوبة ومناسبات الشركات: 2.000 ₺.'],
+    ['Tatlı masaları', 'Dessert tables', 'طاولات الحلويات'],
+    ['Temanıza göre balon ve çiçek süslemeleriyle hazırlanan tatlı masaları.', 'Dessert tables dressed with balloons and flowers to match your theme.', 'طاولات حلويات تُزيَّن بالبالونات والزهور بما يناسب موضوع مناسبتكم.'],
+    ['Kişiye özel menüler', 'Bespoke menus', 'قوائم طعام مخصّصة'],
+    ['Özel günleriniz için size özel kurulan sofralar.', 'Tables set especially for your special days.', 'موائد تُعدّ خصيصًا لمناسباتكم.'],
+    ['2–4 kişilik 2.700 ₺, 6–8 kişilik 3.500 ₺, 8–12 kişilik 4.000 ₺.', 'Serves 2–4: 2.700 ₺ · Serves 6–8: 3.500 ₺ · Serves 8–12: 4.000 ₺.', 'لـ 2–4 أشخاص: 2.700 ₺ · لـ 6–8 أشخاص: 3.500 ₺ · لـ 8–12 شخصًا: 4.000 ₺.'],
+    ['Çikolata kutuları', 'Chocolate boxes', 'علب الشوكولاتة'],
+    ['Çekmeceli kutu 1.500 ₺, ev kutusu 1.000 ₺. Dolu: ev kutusu 3.500 ₺, çekmeceli kutu 4.750 ₺, hurmalı çekmeceli kutu 6.200 ₺. Tek çikolata 150 ₺, hurma 180 ₺, badem şekeri (250 g) 300 ₺.',
+      'Drawer box 1.500 ₺, house box 1.000 ₺. Filled: house box 3.500 ₺, drawer box 4.750 ₺, drawer box with dates 6.200 ₺. Single chocolate 150 ₺, date 180 ₺, sugared almonds (250 g) 300 ₺.',
+      'علبة بأدراج 1.500 ₺، وعلبة منزلية 1.000 ₺. مع الحشوة: العلبة المنزلية 3.500 ₺، والعلبة بأدراج 4.750 ₺، والعلبة بأدراج مع التمر 6.200 ₺. قطعة الشوكولاتة 150 ₺، والتمرة 180 ₺، واللوز المُلبّس (250 غ) 300 ₺.'],
+    ['Sizi bekliyoruz', 'We look forward to seeing you', 'بانتظاركم'],
+    ['Adres', 'Address', 'العنوان'],
+    ['Çalışma saatleri', 'Opening hours', 'ساعات العمل'],
+    ['Haftanın her günü 08.00–22.00', 'Every day, 8 am – 10 pm', 'يوميًا من الثامنة صباحًا حتى العاشرة مساءً'],
+    ['Rezervasyon ve sorular', 'Reservations & questions', 'الحجوزات والاستفسارات'],
+    ["Instagram'dan mesaj:", 'Message us on Instagram:', 'راسلونا على إنستغرام:'],
+    ['Yol tarifi al', 'Get directions', 'الاتجاهات على الخريطة'],
+    ['Ürün fotoğrafı', 'Product photo', 'صورة المنتج'],
+    ['Kapat', 'Close', 'إغلاق'],
+    // Görsel açıklamaları (ekran okuyucular için)
+    ['Çiçek desenli Loçka porselenlerinde kahvaltı tabağı', 'Breakfast on Loçka floral porcelain', 'فطور على خزف Loçka المزيّن بالزهور'],
+    ['Fanus altında pâtisserie tatlıları', 'Pâtisserie desserts under a glass dome', 'حلويات الباتيسري تحت قبة زجاجية'],
+    ['Kırmızı desenli Loçka Türk kahvesi fincanı', 'Red-patterned Loçka Turkish coffee cup', 'فنجان قهوة تركية من Loçka بنقوش حمراء'],
+    ['Gümüş tepside iki Choux Cake', 'Two Choux Cakes on a silver tray', 'قطعتا Choux Cake على صينية فضية'],
+    ['Gümüş tepside Opera Cake', 'Opera Cake on a silver tray', 'Opera Cake على صينية فضية'],
+    ['Gümüş tepside Raspberry White Chocolate Cake', 'Raspberry White Chocolate Cake on a silver tray', 'Raspberry White Chocolate Cake على صينية فضية'],
+    ['Gümüş tepside Snickers Cake', 'Snickers Cake on a silver tray', 'Snickers Cake على صينية فضية'],
+    ['Loçka salonunda kurulmuş masalar ve beyaz güller', 'Set tables and white roses in the Loçka salon', 'طاولات مُعدّة وورود بيضاء في صالة Loçka'],
+    ['Kırmızı çiçek desenli Loçka tabakları ve fincanı', 'Loçka red floral plates and cup', 'أطباق وفنجان Loçka بنقوش الزهور الحمراء'],
+    ['Somon güller ve Loçka hediye kutuları', 'Salmon-pink roses and Loçka gift boxes', 'ورود بلون السلمون وعلب هدايا Loçka'],
+    ['Loçka mağazasının içi', 'Inside the Loçka store', 'داخل متجر Loçka'],
+    ['Gümüş tepside karamelli tatlı', 'Caramel dessert on a silver tray', 'حلوى بالكراميل على صينية فضية'],
+    ['Loçka tabağında Arnavut mantısı', 'Albanian mantı on a Loçka plate', 'مانتي ألباني في طبق Loçka'],
+    ['Loçka mağazasının içi, porselenler ve dekorasyon ürünleri', 'Inside the Loçka store: porcelain and décor', 'داخل متجر Loçka: الخزف وقطع الديكور'],
+    ['Loçka mağazasında kırmızı çiçek desenli tabaklar, fincanlar ve Loçka kutularıyla dolu raflar', 'Shelves of red floral plates, cups and Loçka boxes in the store', 'رفوف مليئة بالأطباق والفناجين المزخرفة وعلب Loçka في المتجر'],
+    ['Beyaz güller, bordo saplı çatal bıçak ve Loçka porselenleriyle kurulmuş sofra', 'A table set with white roses, burgundy-handled cutlery and Loçka porcelain', 'مائدة مُعدّة بورود بيضاء وأدوات مائدة بمقابض عنابية وخزف Loçka'],
+    ['Kırmızı güller ve gümüş servis takımı', 'Red roses and a silver serving set', 'ورود حمراء وطقم تقديم فضي'],
+    ["Loçka'nın Hürriyet Bulvarı'ndaki girişi", "Loçka's entrance on Hürriyet Boulevard", 'مدخل Loçka في شارع حريّت'],
+    // Menü: kategori notları, ürün adları ve açıklamaları
+    ['Maison Kahvaltı', 'Maison Breakfast', 'فطور Maison'],
+    ['İki kişilik. Gümüş tepsilerde peynirler, şarküteri, mevsim meyveleri, reçeller, tereyağı ve ekmek sepeti.', 'For two. Cheeses, charcuterie, seasonal fruit, preserves, butter and a bread basket on silver trays.', 'لشخصين. أجبان ولحوم باردة وفواكه موسمية ومربيات وزبدة وسلة خبز على صوانٍ فضية.'],
+    ['Tek kişilik. Peynirler, zeytinler, mevsim yeşillikleri, haşlanmış yumurta, reçeller, tereyağı ve ekmek sepeti.', 'For one. Cheeses, olives, seasonal greens, a boiled egg, preserves, butter and a bread basket.', 'لشخص واحد. أجبان وزيتون وخضار موسمية وبيضة مسلوقة ومربيات وزبدة وسلة خبز.'],
+    ['Bal Kaymak', 'Honey & Clotted Cream', 'عسل وقشطة'],
+    ['Menemen', 'Menemen (Turkish eggs with tomato & pepper)', 'منمن (بيض تركي بالطماطم والفلفل)'],
+    ['Omlet', 'Omelette', 'أومليت'],
+    ['Otlu Peynirli Omlet', 'Herb & Cheese Omelette', 'أومليت بالأعشاب والجبن'],
+    ['Sebzeli Omlet', 'Vegetable Omelette', 'أومليت بالخضار'],
+    ['Tereyağlı Göz Yumurta', 'Fried Eggs in Butter', 'بيض مقلي بالزبدة'],
+    ['Sucuklu Yumurta', 'Eggs with Sucuk (Turkish sausage)', 'بيض بالسجق التركي'],
+    ['Sucuk Tava', 'Pan-fried Sucuk', 'سجق تركي في المقلاة'],
+    ['Patates', 'Fries', 'بطاطا مقلية'],
+    ['Şarküteri Tabağı', 'Charcuterie Plate', 'طبق اللحوم الباردة'],
+    ['Söğüş Tabağı', 'Fresh Tomato & Cucumber Plate', 'طبق طماطم وخيار طازج'],
+    ['Sade Poğaça', 'Plain Poğaça (soft savoury bun)', 'بوغاتشا سادة (معجنات طرية)'],
+    ['Susamlı Sade Poğaça', 'Sesame Poğaça', 'بوغاتشا بالسمسم'],
+    ['Dereotlu Fesleğenli Labneli Poğaça', 'Labneh Poğaça with Dill & Basil', 'بوغاتشا باللبنة والشبت والريحان'],
+    ['Glutensiz Yulaflı Poğaça', 'Gluten-free Oat Poğaça', 'بوغاتشا بالشوفان خالية من الغلوتين'],
+    ['Zeytinli Açma', 'Olive Açma (soft bread roll)', 'أتشما بالزيتون (خبز طري)'],
+    ['Ekstralar', 'Extras', 'إضافات'],
+    ['Açma 100 ₺, simit 65 ₺, avokado 290 ₺, beyaz peynir 120 ₺, çeçil peyniri 150 ₺, eski kaşar 120 ₺, siyah zeytin 45 ₺, yeşil kırma zeytin 45 ₺, sucuk (2 adet) 150 ₺.',
+      'Açma 100 ₺, simit 65 ₺, avocado 290 ₺, white cheese 120 ₺, çeçil string cheese 150 ₺, aged kaşar 120 ₺, black olives 45 ₺, cracked green olives 45 ₺, sucuk (2 pieces) 150 ₺.',
+      'أتشما 100 ₺، سميت 65 ₺، أفوكادو 290 ₺، جبن أبيض 120 ₺، جبن جيجيل 150 ₺، قشقوان معتّق 120 ₺، زيتون أسود 45 ₺، زيتون أخضر مكسّر 45 ₺، سجق (قطعتان) 150 ₺.'],
+    ['Vitrin her gün yenilenir. Günün tatlıları için Instagram hesabımıza bakabilirsiniz.', "Our showcase changes every day. See today's desserts on our Instagram.", 'تتجدّد الواجهة كل يوم. تابعوا حسابنا على إنستغرام لمعرفة حلويات اليوم.'],
+    ['Balkabaklı Cheesecake', 'Pumpkin Cheesecake', 'تشيز كيك باليقطين'],
+    ['Çilekli Milföy', 'Strawberry Mille-feuille', 'ميل فوي بالفراولة'],
+    ['Meyveli Pasta Dilimi', 'Fruit Cake Slice', 'شريحة كعكة بالفواكه'],
+    ['Krokanlı Çikolatalı Pasta Dilimi', 'Chocolate Praline Crunch Slice', 'شريحة كعكة الشوكولاتة بالكروكان'],
+    ['Vanilya sosuyla.', 'With vanilla sauce.', 'مع صلصة الفانيليا.'],
+    ['Meyveli Silindir Kruvasan', 'Fruit Croissant Roll', 'رول كرواسون بالفواكه'],
+    ['Havuçlu Tarçınlı Kek', 'Carrot & Cinnamon Cake', 'كعكة الجزر والقرفة'],
+    ['Limonlu Kek', 'Lemon Cake', 'كعكة الليمون'],
+    ['Marble Kek', 'Marble Cake', 'كعكة ماربل'],
+    ['Fesleğenli Tuzlu Cookies', 'Savoury Basil Cookies', 'كوكيز مالحة بالريحان'],
+    ['Parmesanlı Tuzlu Cookies', 'Savoury Parmesan Cookies', 'كوكيز مالحة بالبارميزان'],
+    ['Tane fiyatı. Tanesi 20 gr.', 'Price per piece, 20 g each.', 'السعر للقطعة، ووزن القطعة 20 غ.'],
+    ['Tane fiyatı. Tanesi 18 gr.', 'Price per piece, 18 g each.', 'السعر للقطعة، ووزن القطعة 18 غ.'],
+    ['Tane fiyatı.', 'Price per piece.', 'السعر للقطعة.'],
+    ['Arnavut Mantısı', 'Albanian Mantı', 'مانتي ألباني'],
+    ['Yoğurt yatağında, zeytinyağıyla. 1 porsiyon 650 ₺, 1,5 porsiyon 950 ₺.', 'On a bed of yoghurt with olive oil. One portion 650 ₺, one and a half portions 950 ₺.', 'على طبقة من اللبن مع زيت الزيتون. الحصة 650 ₺، والحصة ونصف 950 ₺.'],
+    ['Café de Paris Soslu Bonfile', 'Beef Tenderloin with Café de Paris Sauce', 'فيليه لحم بصلصة كافيه دو باري'],
+    ['Ballı Hardallı Tavuk But', 'Honey Mustard Chicken Thigh', 'أفخاذ دجاج بالعسل والخردل'],
+    ['Bazlamalı Köfte', 'Köfte Meatballs with Bazlama Flatbread', 'كفتة مع خبز البازلاما'],
+    ['Hamburger', 'Hamburger', 'همبرغر'],
+    ['Bonfile Etli Roka Salatası', 'Rocket Salad with Beef Tenderloin', 'سلطة جرجير مع فيليه اللحم'],
+    ['Izgara Tavuk Salatası', 'Grilled Chicken Salad', 'سلطة الدجاج المشوي'],
+    ['Bonfile Etli Sandviç', 'Beef Tenderloin Sandwich', 'ساندويتش فيليه اللحم'],
+    ['Ekşi Mayalı Siyez Sandviç', 'Einkorn Sourdough Sandwich', 'ساندويتش بخبز الإينكورن المخمّر'],
+    ['Tavuklu Sandviç', 'Chicken Sandwich', 'ساندويتش الدجاج'],
+    ['Jambonlu Kaşarlı Sandviç', 'Ham & Kaşar Cheese Sandwich', 'ساندويتش جامبون وجبن قشقوان'],
+    ['Peynirli Cheddar Sandviç', 'Cheddar Cheese Sandwich', 'ساندويتش جبن الشيدر'],
+    ['Mozzarellalı Kruvasan Sandviç', 'Mozzarella Croissant Sandwich', 'ساندويتش كرواسون بالموزاريلا'],
+    ['Sade Kruvasan', 'Plain Croissant', 'كرواسون سادة'],
+    ['Filtre Kahve', 'Filter Coffee', 'قهوة مفلترة'],
+    ['Türk Kahvesi', 'Turkish Coffee', 'قهوة تركية'],
+    ['Double Türk Kahvesi', 'Double Turkish Coffee', 'قهوة تركية مزدوجة'],
+    ['Sade, karamelli ya da çikolatalı.', 'Plain, caramel or chocolate.', 'سادة أو بالكراميل أو بالشوكولاتة.'],
+    ['Demleme Çay', 'Brewed Turkish Tea', 'شاي تركي مخمّر'],
+    ['Çilekli Limonata', 'Strawberry Lemonade', 'ليموناضة بالفراولة'],
+    ['Limon, mango ya da şeftali.', 'Lemon, mango or peach.', 'ليمون أو مانجو أو خوخ.'],
+    ['Meyve Suyu', 'Fruit Juice', 'عصير فواكه'],
+    ['Soda', 'Sparkling Mineral Water', 'مياه معدنية فوّارة'],
+    ['Sade ya da limonlu.', 'Plain or lemon.', 'سادة أو بالليمون.'],
+    ['Gazlı İçecekler', 'Soft Drinks', 'مشروبات غازية'],
+    ['Coca-Cola, Coca-Cola Zero, Fanta, Sprite ya da Schweppes.', 'Coca-Cola, Coca-Cola Zero, Fanta, Sprite or Schweppes.', 'كوكاكولا أو كوكاكولا زيرو أو فانتا أو سبرايت أو شويبس.'],
+    ['Su', 'Water', 'مياه'],
+    ['Uludağ Cam Şişe Su', 'Uludağ Water, glass bottle', 'مياه Uludağ في زجاجة'],
+    ['750 ml.', '750 ml.', '750 مل.'],
+    ['Kuzukulağı', 'Sorrel', 'الحُمّيض'],
+    ['Lime dilimi ve yaban mersiniyle.', 'With a slice of lime and blueberries.', 'مع شريحة ليم وتوت أزرق.'],
+    ['Nane yaprağı ve kırmızı meyveyle.', 'With mint leaves and red berries.', 'مع أوراق النعناع والتوت الأحمر.'],
+    ['Kırık buz, nane ve armut dilimleriyle.', 'With crushed ice, mint and slices of pear.', 'مع ثلج مجروش ونعناع وشرائح كمثرى.'],
+    ['Kremsi köpüğü ve yenilebilir çiçekleriyle.', 'With a creamy foam and edible flowers.', 'برغوة كريمية وزهور صالحة للأكل.'],
+    ['Evin adını taşıyan moktail.', 'The mocktail that carries the house name.', 'الموكتيل الذي يحمل اسم الدار.'],
+    // Latin harfli ürün adlarının Arapça yazılışı (İngilizcede aynı kalır)
+    ['Signature Breakfast Plate', 'Signature Breakfast Plate', 'طبق الفطور Signature'],
+    ['Loçka Cake', 'Loçka Cake', 'كعكة Loçka'],
+    ['Opera Cake', 'Opera Cake', 'كعكة أوبرا'],
+    ['Choux Cake', 'Choux Cake', 'كعكة الشو'],
+    ['Raspberry White Chocolate Cake', 'Raspberry White Chocolate Cake', 'كعكة التوت والشوكولاتة البيضاء'],
+    ['Raspberry White Chocolate', 'Raspberry White Chocolate', 'كعكة التوت والشوكولاتة البيضاء'],
+    ['Snickers Cake', 'Snickers Cake', 'كعكة سنيكرز'],
+    ['Paris-Brest', 'Paris-Brest', 'باريس-بريست'],
+    ['Brownie', 'Brownie', 'براوني'],
+    ['Bitter Chocolate Cookies', 'Dark Chocolate Cookies', 'كوكيز الشوكولاتة الداكنة'],
+    ['Pistachio Cookies', 'Pistachio Cookies', 'كوكيز الفستق'],
+    ["Chef's Green Bowl", "Chef's Green Bowl", 'سلطة الشيف الخضراء'],
+    ['Espresso', 'Espresso', 'إسبريسو'],
+    ['Double Espresso', 'Double Espresso', 'دبل إسبريسو'],
+    ['Americano', 'Americano', 'أمريكانو'],
+    ['Caffè Latte', 'Caffè Latte', 'كافيه لاتيه'],
+    ['Cappuccino', 'Cappuccino', 'كابتشينو'],
+    ['Mocha', 'Mocha', 'موكا'],
+    ['Ice Americano', 'Iced Americano', 'آيس أمريكانو'],
+    ['Ice Latte', 'Iced Latte', 'آيس لاتيه'],
+    ['Ice Mocha', 'Iced Mocha', 'آيس موكا'],
+    ['Frappe', 'Frappé', 'فرابيه'],
+    ['Ice Tea', 'Iced Tea', 'شاي مثلّج'],
+    ['San Pellegrino', 'San Pellegrino', 'سان بيليغرينو'],
+    ['Churchill', 'Churchill', 'تشرشل']
+  ];
+  var META = {
+    en: 'Loçka: breakfast on porcelain of our own design, French-style pâtisserie and a décor boutique. Beylikdüzü, Hürriyet Boulevard. Open every day, 8 am – 10 pm.',
+    ar: 'Loçka: فطور على خزف من تصميمنا، وحلويات على الطريقة الفرنسية، وبوتيك للديكور. بيليكدوزو، شارع حريّت. يوميًا من الثامنة صباحًا حتى العاشرة مساءً.'
+  };
+  var ALT = { en: ' — enlarge photo', ar: '، تكبير الصورة' };
+  var IDX = { en: 1, ar: 2 };
+  var D = {};
+  S.forEach(function (r) { D[r[0]] = r; });
+  function key(s) { return String(s).replace(/\s+/g, ' ').trim(); }
+  var lang = 'tr';
+  // Bir metnin seçili dildeki karşılığı; sözlükte yoksa olduğu gibi kalır (marka ve ürün adları)
+  function L(s, lg) {
+    lg = lg || lang;
+    if (lg === 'tr' || s == null) return s;
+    var k = key(s), r = D[k];
+    if (r) return r[IDX[lg]];
+    var m = k.match(/^(.*) fotoğrafını büyüt$/);
+    if (m) return L(m[1], lg) + ALT[lg];
+    // "45 ₺’den" gibi "…'den başlayan" fiyatlar
+    m = k.match(/^([\d.,]+ ₺)['’]den$/);
+    if (m) return lg === 'en' ? 'from ' + m[1] : 'من ' + m[1];
+    return s;
+  }
+  window.__L = function (s) { return L(s); };
+
+  var orig = new WeakMap();
+  var ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  function textNode(n) {
+    var p = n.parentElement;
+    if (!p || p.closest('script,style,.lang')) return;
+    if (!orig.has(n)) orig.set(n, n.nodeValue);
+    var o = orig.get(n), k = key(o);
+    if (!k || k.length < 2) return;
+    var t = L(k);
+    // Baştaki ve sondaki boşluklar korunur
+    var v = t === k ? o : o.match(/^\s*/)[0] + t + o.match(/\s*$/)[0];
+    if (n.nodeValue !== v) n.nodeValue = v;
+  }
+  function elAttrs(el) {
+    if (el.closest('.lang')) return;
+    ATTRS.forEach(function (a) {
+      if (!el.hasAttribute(a)) return;
+      var store = 'data-tr-' + a;
+      if (!el.hasAttribute(store)) el.setAttribute(store, el.getAttribute(a));
+      var t = L(el.getAttribute(store));
+      if (el.getAttribute(a) !== t) el.setAttribute(a, t);
+    });
+  }
+  function apply(root) {
+    root = root || document.body;
+    if (root.nodeType === 3) { textNode(root); return; }
+    if (root.nodeType !== 1) return;
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), n;
+    while ((n = w.nextNode())) textNode(n);
+    if (root.matches && root.matches('[' + ATTRS.join('],[') + ']')) elAttrs(root);
+    root.querySelectorAll('[' + ATTRS.join('],[') + ']').forEach(elAttrs);
+  }
+  // Menü, arama sonuçları gibi sonradan gelen içerik de çevrilsin
+  var busy = false;
+  new MutationObserver(function (list) {
+    if (busy || lang === 'tr') return;
+    busy = true;
+    list.forEach(function (m) {
+      if (m.type === 'characterData') { var n = m.target; if (orig.has(n) && n.nodeValue !== L(orig.get(n))) orig.set(n, n.nodeValue); textNode(n); }
+      else m.addedNodes.forEach(function (a) { if (a.nodeType === 3) orig.delete(a); apply(a); });
+    });
+    busy = false;
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+
+  var fontsLoaded = false;
+  function arabicFonts() {
+    if (fontsLoaded) return; fontsLoaded = true;
+    var l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = 'https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&display=swap';
+    document.head.appendChild(l);
+  }
+  var trTitle = document.title, trDesc = document.querySelector('meta[name="description"]').content;
+  function setLang(lg) {
+    if (!IDX[lg]) lg = 'tr';
+    lang = lg;
+    if (lg === 'ar') arabicFonts();
+    var html = document.documentElement;
+    html.lang = lg; html.dir = lg === 'ar' ? 'rtl' : 'ltr';
+    document.querySelector('meta[name="description"]').content = lg === 'tr' ? trDesc : META[lg];
+    document.title = trTitle;
+    busy = true;
+    if (lg === 'tr') {
+      var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), n;
+      while ((n = w.nextNode())) if (orig.has(n) && n.nodeValue !== orig.get(n)) n.nodeValue = orig.get(n);
+      document.querySelectorAll('[data-tr-placeholder],[data-tr-aria-label],[data-tr-alt],[data-tr-title]').forEach(function (el) {
+        ATTRS.forEach(function (a) { if (el.hasAttribute('data-tr-' + a)) el.setAttribute(a, el.getAttribute('data-tr-' + a)); });
+      });
+    } else apply(document.body);
+    busy = false;
+    document.querySelectorAll('.lang button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.lang === lg ? 'true' : 'false'); });
+    try { localStorage.setItem('locka-lang', lg); } catch (e) {}
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) { b.addEventListener('click', function () { setLang(b.dataset.lang); }); });
+  var start = new URLSearchParams(location.search).get('lang');
+  if (!start) { try { start = localStorage.getItem('locka-lang'); } catch (e) {} }
+  if (start && start !== 'tr') setLang(start);
 })();
 </script>
 </body>
