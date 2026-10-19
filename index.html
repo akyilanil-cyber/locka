@@ -6,6 +6,17 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loçka Home & Pâtisserie | Beylikdüzü</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Loçka Home & Pâtisserie">
+<meta property="og:title" content="Loçka Home & Pâtisserie · Beylikdüzü">
+<meta property="og:description" content="Kendi tasarımımız porselenlerde kahvaltı, Fransız pâtisserie geleneğiyle tatlılar ve dekorasyon butiği. Her gün 08.00–22.00.">
+<meta property="og:url" content="https://akyilanil-cyber.github.io/locka/">
+<meta property="og:image" content="https://akyilanil-cyber.github.io/locka/images/og-locka.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="tr_TR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#4A1320">
 <meta name="description" content="Loçka: kendi tasarımımız porselenlerde kahvaltı, Fransız pâtisserie geleneğiyle tatlılar ve dekorasyon butiği. Beylikdüzü, Hürriyet Bulvarı. Her gün 08.00–22.00.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -237,7 +248,31 @@ p { margin: 0; }
   box-shadow: inset 0 0 0 1px var(--red), inset 0 0 0 7px var(--porcelain), inset 0 0 0 8px rgba(179,20,31,.45), 0 24px 50px rgba(74,19,32,.08);
 }
 .menu-top { text-align: center; margin-bottom: 30px; }
-.menu-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: clamp(32px, 5vw, 48px); }
+.menu-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+/* Arama ve sekmeler: menüde aşağı inerken üstte kalır */
+.menu-bar { position: sticky; top: 64px; z-index: 5; background: var(--porcelain); padding: 12px 0; margin-bottom: clamp(24px, 4vw, 40px); display: grid; gap: 12px; }
+.menu-search { display: flex; align-items: center; gap: 10px; max-width: 440px; width: 100%; margin: 0 auto; border: 1px solid var(--rule); border-radius: 999px; padding: 0 16px; background: #fff; color: var(--soft); transition: border-color .2s; }
+.menu-search:focus-within { border-color: var(--wine); }
+.menu-search svg { width: 18px; height: 18px; flex: none; }
+.menu-search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: 400 1rem var(--body); color: var(--ink); padding: 11px 0; }
+.menu-search input::placeholder { color: #9b8589; }
+.menu-tabs.dim button[aria-selected="true"] { background: transparent; color: var(--wine); border-color: var(--rule); }
+.search-empty { color: var(--soft); text-align: center; padding: 24px 0 8px; }
+.search-cat { display: block; font: 500 .72rem var(--body); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); margin-top: 2px; }
+/* Paylaşımlık rozeti */
+.tag { display: inline-block; vertical-align: middle; margin-left: 8px; font: 500 .66rem/1 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(179,20,31,.45); border-radius: 999px; padding: 4px 8px 3px; font-style: normal; white-space: nowrap; }
+/* Öne çıkanlar şeridi */
+.picks { margin: 0 0 18px; }
+.picks-title { text-align: center; font: italic 400 1.35rem/1.2 var(--display); color: var(--red); margin-bottom: 16px; }
+.picks-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+.pick { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
+.pick .pick-photo { width: 100%; max-width: 170px; aspect-ratio: 4/5; border-radius: 999px 999px 8px 8px; overflow: hidden; padding: 0; border: 0; background: var(--linen); cursor: zoom-in; }
+.pick .pick-photo img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.pick .pick-photo:hover img { transform: scale(1.04); }
+.pick h4 { font: 500 1.02rem/1.25 var(--display); color: var(--wine); min-height: 2.5em; }
+.picks-row, .menu-tabs { scrollbar-width: none; }
+.picks-row::-webkit-scrollbar, .menu-tabs::-webkit-scrollbar { display: none; }
+.pick .price { color: var(--red); font-weight: 500; font-size: .95rem; }
 .menu-tabs button { font: 500 .9rem var(--body); padding: 8px 15px; border-radius: 999px; border: 1px solid var(--rule); background: transparent; color: var(--wine); cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
 .menu-tabs button:hover { border-color: var(--wine); }
 .menu-tabs button[aria-selected="true"] { background: var(--wine); color: var(--on-wine); border-color: var(--wine); }
@@ -361,6 +396,9 @@ footer a { color: var(--on-wine); }
   .strip { grid-template-columns: repeat(2, 1fr); gap: 16px 14px; }
   .drink h3 { font-size: 1.15rem; }
   .menu-tabs { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 6px; margin-inline: -8px; padding-inline: 8px; }
+  .menu-bar { top: 60px; margin-inline: -8px; padding-inline: 8px; }
+  .picks-row { display: flex; overflow-x: auto; gap: 14px; scroll-snap-type: x mandatory; padding-bottom: 6px; margin-inline: -8px; padding-inline: 8px; }
+  .pick { flex: 0 0 132px; scroll-snap-align: start; }
   .menu-tabs button { flex: none; }
   .butik-photos .tall { grid-column: 1 / -1; grid-row: auto; height: auto; aspect-ratio: 4/3; object-position: 50% 35%; }
   .whole { flex-direction: column; align-items: flex-start; gap: 4px; }
@@ -588,7 +626,17 @@ footer a { color: var(--on-wine); }
           <span class="eyebrow">Menü</span>
           <h2>Vitrinden ve mutfaktan</h2>
         </div>
-        <div class="menu-tabs" role="tablist" aria-label="Menü kategorileri" id="menuTabs"></div>
+        <div class="picks" id="menuPicks" hidden>
+          <p class="picks-title">Loçka’da öne çıkanlar</p>
+          <div class="picks-row" id="picksRow"></div>
+        </div>
+        <div class="menu-bar">
+          <label class="menu-search">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input type="search" id="menuSearch" placeholder="Menüde ara: çikolata, glutensiz, latte…" aria-label="Menüde ara" autocomplete="off">
+          </label>
+          <div class="menu-tabs" role="tablist" aria-label="Menü kategorileri" id="menuTabs"></div>
+        </div>
         <div id="menuPanel" class="menu-panel" role="tabpanel">
           <p class="menu-fallback">Menü yükleniyor. Görünmezse <a href="#menu">menünün tamamına buradan bakın</a>.</p>
         </div>
@@ -790,7 +838,30 @@ footer a { color: var(--on-wine); }
     function photoBtn(i, cls, inner) {
       return '<button type="button" class="' + cls + '" data-photo="' + esc(img(i.image)) + '" data-caption="' + esc(i.name) + '" aria-label="' + esc(i.name) + ' fotoğrafını büyüt">' + inner + '</button>';
     }
+    // Birden fazla kişiyle paylaşılan ürünler (rozet)
+    var PAYLASIMLIK = ['Signature Breakfast Plate', 'Bütün Pastalar'];
+    function tag(i) { return PAYLASIMLIK.indexOf(i.name) >= 0 ? '<span class="tag">Paylaşımlık</span>' : ''; }
+    function spreadHTML(i) {
+      return '<article class="spread">' + photoBtn(i, 'spread-photo', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') +
+        '<div class="spread-body"><div class="menu-row"><h4 class="name">' + esc(i.name) + tag(i) + '</h4><span class="dots"></span><span class="price">' + esc(price(i.price, show)) + '</span></div>' +
+        (i.desc ? '<p class="desc">' + esc(i.desc) + '</p>' : '') + '</div></article>';
+    }
+    function itemHTML(i, catName) {
+      var badge = i.image ? photoBtn(i, 'thumb', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') : '<span class="thumb mono">' + FLOWER + '</span>';
+      return '<li class="menu-item">' + badge +
+        '<div class="body"><div class="menu-row"><span class="name">' + esc(i.name) + tag(i) + '</span><span class="dots"></span><span class="price">' + esc(price(i.price, show)) + '</span></div>' +
+        (catName ? '<span class="search-cat">' + esc(catName) + '</span>' : '') +
+        (i.desc ? '<p class="desc">' + esc(i.desc) + '</p>' : '') + '</div></li>';
+    }
+    function animate() {
+      panel.querySelectorAll('.spread, .menu-item').forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 14)); });
+      panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+    }
+    var current = 0;
     function open(idx) {
+      current = idx;
+      if (search.value) search.value = '';
+      tabs.classList.remove('dim');
       Array.prototype.forEach.call(tabs.children, function (b, i) { b.setAttribute('aria-selected', i === idx ? 'true' : 'false'); b.tabIndex = i === idx ? 0 : -1; });
       var c = cats[idx];
       var items = c.items.filter(function (i) { return i.visible !== false; });
@@ -799,23 +870,72 @@ footer a { color: var(--on-wine); }
       panel.setAttribute('aria-labelledby', 'tab-' + idx);
       panel.innerHTML = '<div class="cat-head"><h3>' + esc(c.name) + '</h3><span class="rule"></span></div>' +
         (c.note ? '<p class="menu-note">' + esc(c.note) + '</p>' : '') +
-        (feat.length ? '<div class="spreads">' + feat.map(function (i) {
-          return '<article class="spread">' + photoBtn(i, 'spread-photo', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') +
-            '<div class="spread-body"><div class="menu-row"><h4 class="name">' + esc(i.name) + '</h4><span class="dots"></span><span class="price">' + esc(price(i.price, show)) + '</span></div>' +
-            (i.desc ? '<p class="desc">' + esc(i.desc) + '</p>' : '') + '</div></article>';
-        }).join('') + '</div>' : '') +
-        '<ul class="menu-list">' + rest.map(function (i) {
-          var badge = i.image ? photoBtn(i, 'thumb', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') : '<span class="thumb mono">' + FLOWER + '</span>';
-          return '<li class="menu-item">' + badge +
-            '<div class="body"><div class="menu-row"><span class="name">' + esc(i.name) + '</span><span class="dots"></span><span class="price">' + esc(price(i.price, show)) + '</span></div>' +
-            (i.desc ? '<p class="desc">' + esc(i.desc) + '</p>' : '') + '</div></li>';
-        }).join('') + '</ul>';
-      panel.querySelectorAll('.spread, .menu-item').forEach(function (el, i) { el.style.setProperty('--i', Math.min(i, 14)); });
-      panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap');
+        (feat.length ? '<div class="spreads">' + feat.map(spreadHTML).join('') + '</div>' : '') +
+        '<ul class="menu-list">' + rest.map(function (i) { return itemHTML(i); }).join('') + '</ul>';
+      animate();
+    }
+
+    // Menüde arama: Türkçe harf ve büyük-küçük harf farkı gözetmez
+    var search = document.getElementById('menuSearch');
+    function norm(s) {
+      return String(s || '').toLocaleLowerCase('tr').replace(/[âàá]/g, 'a').replace(/[îı]/g, 'i').replace(/[ûü]/g, 'u')
+        .replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/[éè]/g, 'e').replace(/ñ/g, 'n');
+    }
+    function runSearch() {
+      var q = norm(search.value.trim());
+      if (q.length < 2) { if (!q) open(current); return; }
+      // Menüde İngilizce adlı ürünler de Türkçe kelimeyle bulunsun
+      var ES = { cikolata: 'chocolate', cilek: 'strawberry', ahududu: 'raspberry', kahve: 'coffee', cay: 'tea', limon: 'lemon', ananas: 'pine', nane: 'mint', tavuk: 'chicken', kahvalti: 'breakfast' };
+      var terms = [q];
+      Object.keys(ES).forEach(function (k) { if (k.indexOf(q) === 0 || q.indexOf(k) === 0) terms.push(ES[k]); });
+      var hits = [];
+      cats.forEach(function (c) {
+        c.items.forEach(function (i) {
+          if (i.visible === false) return;
+          var text = norm(i.name + ' ' + (i.desc || '') + ' ' + c.name + (tag(i) ? ' paylasimlik' : ''));
+          if (terms.some(function (t) { return text.indexOf(t) >= 0; })) hits.push([i, c.name]);
+        });
+      });
+      tabs.classList.add('dim');
+      panel.removeAttribute('aria-labelledby');
+      panel.innerHTML = '<div class="cat-head"><h3>“' + esc(search.value.trim()) + '”</h3><span class="rule"></span></div>' +
+        (hits.length
+          ? '<ul class="menu-list">' + hits.map(function (h) { return itemHTML(h[0], h[1]); }).join('') + '</ul>'
+          : '<p class="search-empty">Bu aramayla eşleşen ürün bulamadık. Başka bir kelime deneyin.</p>');
+      animate();
+    }
+    search.addEventListener('input', runSearch);
+    search.addEventListener('keydown', function (e) { if (e.key === 'Escape') { search.value = ''; open(current); } });
+
+    // Öne çıkanlar: fotoğrafı olan ürünlerden, öne çıkarılanlar önce
+    // Kategorilerden sırayla seçilir (kahvaltı, pâtisserie, moktail...), aynı kategori art arda gelmez
+    var pools = cats.map(function (c) {
+      return c.items.filter(function (i) { return i.visible !== false && i.image; })
+        .sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
+    }).filter(function (p) { return p.length; });
+    var picks = [];
+    for (var round = 0; picks.length < 6 && pools.some(function (p) { return p.length > round; }); round++) {
+      pools.forEach(function (p) { if (p[round] && picks.length < 6) picks.push(p[round]); });
+    }
+    if (picks.length >= 3) {
+      document.getElementById('picksRow').innerHTML = picks.map(function (i) {
+        return '<article class="pick">' + photoBtn(i, 'pick-photo', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') +
+          '<h4>' + esc(i.name) + '</h4><span class="price">' + esc(price(i.price, show)) + '</span></article>';
+      }).join('');
+      document.getElementById('menuPicks').hidden = false;
     }
     tabs.innerHTML = cats.map(function (c, i) { return '<button type="button" role="tab" id="tab-' + i + '">' + esc(c.name) + '</button>'; }).join('');
     Array.prototype.forEach.call(tabs.children, function (b, i) {
-      b.addEventListener('click', function () { open(i); });
+      b.addEventListener('click', function () {
+        open(i);
+        // Listenin ortasındaysak yeni kategorinin başına dön
+        var bar = document.querySelector('.menu-bar');
+        setTimeout(function () {
+          var barBottom = parseFloat(getComputedStyle(bar).top) + bar.offsetHeight + 12;
+          var top = panel.getBoundingClientRect().top;
+          if (top < barBottom) window.scrollTo(0, window.scrollY + top - barBottom);
+        }, 0);
+      });
       b.addEventListener('keydown', function (e) {
         var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
         if (n === null) return;
