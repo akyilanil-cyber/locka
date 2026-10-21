@@ -385,6 +385,38 @@ footer .foot-bottom { display: flex; }
 @media (max-width: 900px) {
   .rev-row { grid-template-columns: 1fr; }
 }
+/* Menü: Kraken düzeni */
+.kicker-on-red { color: var(--on-red-soft); margin-bottom: 14px; }
+.search { border: 1px solid var(--line); border-radius: 999px; padding: 0 18px; background: #fff; max-width: 520px; }
+.search:focus-within { border-color: var(--red); }
+.tabs { gap: 8px; }
+.tabs button { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; font-size: .86rem; color: var(--ink); background: #fff; }
+.tabs button:hover { border-color: var(--red-soft); color: var(--ink); }
+.tabs button[aria-selected="true"] { background: var(--red); border-color: var(--red); color: var(--on-red); }
+.tabs.dim button[aria-selected="true"] { background: #fff; border-color: var(--line); color: var(--ink); }
+.menu-card { background: #fff; border: 1px solid var(--line); box-shadow: 0 18px 40px rgba(90,14,34,.06); padding: clamp(22px, 4vw, 52px); margin-bottom: clamp(56px, 8vw, 96px); }
+.mc-head { text-align: center; padding-bottom: 22px; margin-bottom: clamp(26px, 4vw, 40px); border-bottom: 1px solid var(--line); }
+.mc-brand { font: italic 400 clamp(1.8rem, 5vw, 2.4rem)/1.1 var(--serif-text); color: var(--red); }
+.mc-sub { font-size: .74rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--mute); margin-top: 6px; }
+.picks { text-align: center; margin-bottom: clamp(36px, 6vw, 56px); padding-bottom: clamp(30px, 5vw, 48px); border-bottom: 1px solid var(--line); }
+.picks h2 { font: 400 clamp(1.5rem, 4vw, 2rem)/1.2 var(--serif); color: var(--ink); margin-bottom: 6px; }
+.picks h2 span { color: var(--red-soft); font-size: .7em; vertical-align: 2px; }
+.picks-sub { font-size: .72rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red-soft); margin-bottom: 22px; }
+.picks-row { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(3, 1fr); overflow: visible; gap: 16px; text-align: start; }
+.pick { border: 1px solid var(--line); background: var(--porcelain); padding-bottom: 12px; }
+.pick h3, .pick .price { padding-inline: 12px; }
+.pick h3 { font-size: 1rem; }
+.panel { padding-bottom: 0; }
+.item > div, .spread { min-width: 0; }
+.row .name { min-width: 0; overflow-wrap: break-word; }
+.desc { overflow-wrap: break-word; }
+.cat + .cat { margin-top: clamp(40px, 6vw, 64px); }
+@media (min-width: 1000px) { .picks-row { grid-template-columns: repeat(6, 1fr); } }
+.cat-title { padding-bottom: 10px; border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+@media (max-width: 760px) {
+  .picks-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .menu-card { margin-inline: -8px; }
+}
 /* Bilgisayar: dikey video büyütülünce bulanıklaşmasın; metin kırmızı zeminde, video sağda kendi oranında */
 @media (min-width: 1000px) {
   .hero { background: var(--red); align-items: center; }
@@ -582,7 +614,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 
   <!-- Menü -->
   <section class="view" data-view="menu" aria-labelledby="menuTitle" hidden>
-    <div class="page-head"><div class="wrap"><h1 id="menuTitle">Menü</h1><p>Kahvaltıdan moktaillere, bütün menü.</p></div></div>
+    <div class="page-head"><div class="wrap"><p class="kicker left kicker-on-red">Menü</p><h1 id="menuTitle">Lezzet rehberi</h1><p>Kahvaltıdan moktaillere, bütün menü.</p></div></div>
     <div class="feston" aria-hidden="true" style="margin-bottom:0"></div>
     <div class="menu-bar">
       <div class="wrap">
@@ -594,12 +626,16 @@ html[lang="ar"] .door .no { padding-top: .2em; }
       </div>
     </div>
     <div class="wrap">
-      <div class="picks" id="menuPicks" hidden>
-        <h2>Loçka’da öne çıkanlar</h2>
-        <div class="picks-row" id="picksRow"></div>
-      </div>
-      <div id="menuPanel" class="panel" role="tabpanel">
-        <p class="empty">Menü yükleniyor. Görünmezse <a href="#menu">menünün tamamına buradan bakın</a>.</p>
+      <div class="menu-card">
+        <div class="mc-head"><p class="mc-brand">Loçka</p><p class="mc-sub">Pâtisserie &amp; Café</p></div>
+        <div class="picks" id="menuPicks" hidden>
+          <h2><span aria-hidden="true">✦</span> Loçka’da öne çıkanlar <span aria-hidden="true">✦</span></h2>
+          <p class="picks-sub">En çok sevilenler</p>
+          <div class="picks-row" id="picksRow"></div>
+        </div>
+        <div id="menuPanel" class="panel" role="tabpanel">
+          <p class="empty">Menü yükleniyor. Görünmezse <a href="#menu">menünün tamamına buradan bakın</a>.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -905,20 +941,24 @@ html[lang="ar"] .door .no { padding-top: .2em; }
       return '<li class="item">' + badge + '<div>' + row(i) + (catName ? '<span class="in-cat">' + esc(catName) + '</span>' : '') + (i.desc ? '<p class="desc">' + esc(i.desc) + '</p>' : '') + '</div></li>';
     }
     function animate() { if (reduce) return; panel.classList.remove('swap'); void panel.offsetWidth; panel.classList.add('swap'); }
-    var cur = 0;
+    var cur = -1;
+    function catBlock(c, spreads) {
+      var items = c.items.filter(function (i) { return i.visible !== false; });
+      var feat = spreads ? items.filter(function (i) { return i.featured && i.image; }) : [];
+      var rest = items.filter(function (i) { return feat.indexOf(i) < 0; });
+      return '<section class="cat"><h2 class="cat-title">' + esc(c.name) + '</h2>' + (c.note ? '<p class="cat-note">' + esc(c.note) + '</p>' : '') +
+        (feat.length ? '<div class="spreads">' + feat.map(spreadHTML).join('') + '</div>' : '') +
+        '<ul class="items">' + rest.map(function (i) { return itemHTML(i); }).join('') + '</ul></section>';
+    }
+    // idx -1: Tümü (bütün kategoriler alt alta)
     function open(idx) {
       cur = idx;
       if (search.value) search.value = '';
       tabs.classList.remove('dim');
-      Array.prototype.forEach.call(tabs.children, function (b, i) { b.setAttribute('aria-selected', i === idx ? 'true' : 'false'); b.tabIndex = i === idx ? 0 : -1; });
-      var c = cats[idx];
-      var items = c.items.filter(function (i) { return i.visible !== false; });
-      var feat = items.filter(function (i) { return i.featured && i.image; });
-      var rest = items.filter(function (i) { return !(i.featured && i.image); });
-      panel.setAttribute('aria-labelledby', 'tab-' + idx);
-      panel.innerHTML = '<h2 class="cat-title">' + esc(c.name) + '</h2>' + (c.note ? '<p class="cat-note">' + esc(c.note) + '</p>' : '') +
-        (feat.length ? '<div class="spreads">' + feat.map(spreadHTML).join('') + '</div>' : '') +
-        '<ul class="items">' + rest.map(function (i) { return itemHTML(i); }).join('') + '</ul>';
+      Array.prototype.forEach.call(tabs.children, function (b, i) { b.setAttribute('aria-selected', i === idx + 1 ? 'true' : 'false'); b.tabIndex = i === idx + 1 ? 0 : -1; });
+      panel.setAttribute('aria-labelledby', 'tab-' + (idx + 1));
+      panel.innerHTML = idx < 0 ? cats.map(function (c) { return catBlock(c, false); }).join('') : catBlock(cats[idx], true);
+      document.getElementById('menuPicks').hidden = idx >= 0 || document.getElementById('picksRow').children.length < 3;
       animate();
     }
     var search = document.getElementById('menuSearch');
@@ -929,6 +969,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     function runSearch() {
       var q = norm(search.value.trim());
       if (q.length < 2) { if (!q) open(cur); return; }
+      document.getElementById('menuPicks').hidden = true;
       var ES = { cikolata: 'chocolate', cilek: 'strawberry', ahududu: 'raspberry', kahve: 'coffee', cay: 'tea', limon: 'lemon', ananas: 'pine', nane: 'mint', tavuk: 'chicken', kahvalti: 'breakfast' };
       var terms = [q];
       Object.keys(ES).forEach(function (k) { if (k.indexOf(q) === 0 || q.indexOf(k) === 0) terms.push(ES[k]); });
@@ -972,22 +1013,22 @@ html[lang="ar"] .door .no { padding-top: .2em; }
       }).join('');
       document.getElementById('homePicksWrap').hidden = false;
     }
-    tabs.innerHTML = cats.map(function (c, i) { return '<button type="button" role="tab" id="tab-' + i + '">' + esc(c.name) + '</button>'; }).join('');
+    tabs.innerHTML = '<button type="button" role="tab" id="tab-0">Tümü</button>' + cats.map(function (c, i) { return '<button type="button" role="tab" id="tab-' + (i + 1) + '">' + esc(c.name) + '</button>'; }).join('');
     function toPanel() {
       var bar = document.querySelector('.menu-bar');
       var barBottom = parseFloat(getComputedStyle(bar).top) + bar.offsetHeight + 12;
-      var t = panel.getBoundingClientRect().top;
+      var t = (cur < 0 ? document.querySelector('.menu-card') : panel).getBoundingClientRect().top;
       if (t < barBottom) window.scrollTo(0, window.scrollY + t - barBottom);
     }
     Array.prototype.forEach.call(tabs.children, function (b, i) {
-      b.addEventListener('click', function () { open(i); setTimeout(toPanel, 0); });
+      b.addEventListener('click', function () { open(i - 1); setTimeout(toPanel, 0); });
       b.addEventListener('keydown', function (e) {
         var n = e.key === 'ArrowRight' ? i + 1 : e.key === 'ArrowLeft' ? i - 1 : null;
         if (n === null) return;
-        n = (n + cats.length) % cats.length; open(n); tabs.children[n].focus();
+        n = (n + tabs.children.length) % tabs.children.length; open(n - 1); tabs.children[n].focus();
       });
     });
-    open(0);
+    open(-1);
     window.__openTab = function (name) {
       var i = cats.map(function (c) { return c.name; }).indexOf(name);
       if (i >= 0) { open(i); setTimeout(function () { var p = panel.getBoundingClientRect().top + window.scrollY - 140; window.scrollTo(0, p); }, 0); }
@@ -1018,6 +1059,10 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 <script>
 /* Bu tasarımda yeni olan ifadeler (sözlüğe eklenir) */
 window.__S2 = [
+  ['Tümü', 'All', 'الكل'],
+  ['Lezzet rehberi', 'Our menu', 'قائمة الطعام'],
+  ['Pâtisserie & Café', 'Pâtisserie & Café', '\u2066Pâtisserie & Café\u2069'],
+  ['En çok sevilenler', 'Guest favourites', 'الأكثر طلبًا'],
   ['Kahvaltı', 'Breakfast', 'الفطور'],
   ['Gümüş tepsilerde, her sabah 08.00’den itibaren.', 'Served on silver trays, every morning from 8 am.', 'على صوانٍ فضية، كل صباح من الثامنة.'],
   ['Kendi tasarımımız porselenler ve hediyelikler; sofradakini evinize götürün.', 'Porcelain of our own design and gifts; take home what you see on the table.', 'خزف من تصميمنا وهدايا؛ خذوا ما ترونه على المائدة إلى منزلكم.'],
