@@ -291,8 +291,7 @@ footer a { color: var(--on-red); }
 .story-text { color: var(--mute); max-width: 34em; margin: 0 auto 18px; font-size: 1.05rem; }
 .pillars { list-style: none; padding: 0; margin: clamp(36px, 6vw, 64px) 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); text-align: start; }
 .pillars li + li { border-inline-start: 1px solid var(--line); }
-.pillars a { display: block; height: 100%; padding: 28px 22px; text-decoration: none; transition: background-color .25s; }
-.pillars a:hover { background: var(--paper); }
+.pillars li { padding: 28px 22px; }
 .pillars h3 { font: 400 1.35rem/1.25 var(--serif); color: var(--red); margin-bottom: 8px; }
 .pillars p { color: var(--mute); font-size: .92rem; }
 .signature { background: var(--paper); padding: clamp(56px, 9vw, 104px) 0; text-align: center; }
@@ -358,6 +357,33 @@ footer .foot-bottom { display: flex; }
   .share .wrap { grid-template-columns: 1fr; }
   footer .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
   .foot-brand { grid-column: 1 / -1; }
+}
+.choco { padding: clamp(56px, 9vw, 104px) 0; }
+.choco .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
+.choco-photos { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; gap: 12px; height: clamp(420px, 44vw, 600px); }
+.choco-photos button { padding: 0; border: 0; background: var(--paper); cursor: zoom-in; overflow: hidden; }
+.choco-photos img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.choco-photos button:hover img { transform: scale(1.04); }
+.choco-photos .c-main { grid-row: 1 / 3; }
+.choco-text h2 { font: 400 clamp(2.2rem, 6vw, 3.4rem)/1.05 var(--serif); margin-bottom: 18px; }
+.choco-lead { color: #46383c; font-size: 1.05rem; max-width: 30em; }
+.choco-prices { margin: 18px 0 0; padding: 16px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); color: var(--mute); font-size: .95rem; max-width: 30em; }
+.choco-text .btn { margin-top: 26px; }
+@media (max-width: 760px) {
+  .choco .wrap { grid-template-columns: 1fr; }
+  .choco-photos { height: 440px; }
+}
+.reviews { background: var(--paper); padding: clamp(56px, 9vw, 104px) 0; text-align: center; }
+.reviews h2 { font: 400 clamp(2.2rem, 6vw, 3.4rem)/1.05 var(--serif); margin-bottom: clamp(28px, 5vw, 48px); }
+.rev-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: start; margin-bottom: 32px; }
+.rev { margin: 0; background: var(--porcelain); border: 1px solid var(--line); padding: 28px 26px 24px; display: flex; flex-direction: column; gap: 14px; }
+.rev-mark { font: 400 3rem/0.6 var(--serif); color: var(--red-soft); height: 22px; }
+.rev blockquote { margin: 0; font: italic 400 1.05rem/1.6 var(--serif-text); color: #46383c; flex: 1; }
+.rev figcaption { display: flex; align-items: center; gap: 12px; padding-top: 16px; border-top: 1px solid var(--line); font-size: .9rem; font-weight: 500; }
+.rev-av { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--red-soft); color: var(--red); display: grid; place-items: center; font: 400 .95rem var(--serif); }
+.rev-stars { display: block; color: var(--red); letter-spacing: .12em; font-size: .78rem; }
+@media (max-width: 900px) {
+  .rev-row { grid-template-columns: 1fr; }
 }
 /* Bilgisayar: dikey video büyütülünce bulanıklaşmasın; metin kırmızı zeminde, video sağda kendi oranında */
 @media (min-width: 1000px) {
@@ -483,10 +509,10 @@ html[lang="ar"] .door .no { padding-top: .2em; }
         <p class="story-text">Sevdiklerimize seslenirken kullandığımız bu kelimeyi, en sevdiğimiz şeye ad olarak verdik: özenle kurulmuş bir sofraya ve o sofrada sizi ağırlamaya.</p>
         <a class="link" href="#hikaye">Hikâyemizi okuyun</a>
         <ul class="pillars">
-          <li><a href="#butik"><h3>Kendi porselenimiz</h3><p>Tabaklar, fincanlar ve gümüşler Loçka tasarımı.</p></a></li>
-          <li><a href="#menu"><h3>Pâtisserie</h3><p>Fransız pâtisserie geleneğiyle, her gün.</p></a></li>
-          <li><a href="#butik"><h3>Butik</h3><p>Sofradakini evinize götürebilirsiniz.</p></a></li>
-          <li><a href="#davetler"><h3>Davetler</h3><p>Tatlı masaları ve kişiye özel menüler.</p></a></li>
+          <li><h3>Kendi porselenimiz</h3><p>Tabaklar, fincanlar ve gümüşler Loçka tasarımı.</p></li>
+          <li><h3>Pâtisserie</h3><p>Fransız pâtisserie geleneğiyle, her gün.</p></li>
+          <li><h3>Butik</h3><p>Sofradakini evinize götürebilirsiniz.</p></li>
+          <li><h3>Davetler</h3><p>Tatlı masaları ve kişiye özel menüler.</p></li>
         </ul>
       </div>
     </section>
@@ -514,6 +540,38 @@ html[lang="ar"] .door .no { padding-top: .2em; }
         </div>
         <div class="sig-row" id="homePicks"></div>
         <p class="center"><a class="btn red" href="#menu">Menünün tamamı</a></p>
+      </div>
+    </section>
+
+    <!-- Çikolata kutuları: Loçka'nın Instagram paylaşımından -->
+    <section class="choco" aria-labelledby="chocoTitle">
+      <div class="wrap">
+        <div class="choco-photos">
+          <button type="button" class="c-main" data-photo="../images/cikolata/kutu-acik.jpg" data-caption="Çikolata kutuları" aria-label="Fotoğrafı büyüt"><img src="../images/cikolata/kutu-acik.jpg" alt="Mackenzie-Childs kutusunda trüf ve çikolatalar" loading="lazy"></button>
+          <button type="button" class="c-side" data-photo="../images/cikolata/kutu-yakin.jpg" data-caption="Çikolata kutuları" aria-label="Fotoğrafı büyüt"><img src="../images/cikolata/kutu-yakin.jpg" alt="Fıstıklı, ahududulu ve hindistan cevizli trüfler" loading="lazy"></button>
+          <button type="button" class="c-side" data-photo="../images/cikolata/kutu-kapali.jpg" data-caption="Çikolata kutuları" aria-label="Fotoğrafı büyüt"><img src="../images/cikolata/kutu-kapali.jpg" alt="Çiçek desenli Mackenzie-Childs kutuları" loading="lazy"></button>
+        </div>
+        <div class="choco-text">
+          <p class="kicker left">Hediyelik</p>
+          <h2 id="chocoTitle">Çikolata kutuları</h2>
+          <p class="choco-lead">Mackenzie-Childs’ın renkli kutularında, farklı tatlarda çikolatalar: fıstıklı, ahududulu ve hindistan cevizli trüfler, çikolata kaplı portakal dilimleri.</p>
+          <p class="choco-prices" id="chocoPrices" hidden></p>
+          <a class="btn red" href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">Sipariş için Instagram’dan yazın</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Misafir yorumları: Google Haritalar'daki yorumlardan seçildi -->
+    <section class="reviews" aria-labelledby="revTitle">
+      <div class="wrap">
+        <p class="kicker">Misafirlerimiz</p>
+        <h2 id="revTitle">Misafirlerimizin sözleri</h2>
+        <div class="rev-row">
+          <figure class="rev"><span class="rev-mark" aria-hidden="true">“</span><blockquote>Fransız zarafetini her detayında hissettiren, hem kafe atmosferiyle hem de birbirinden güzel ürünleriyle büyüleyen harika bir mekân! Şık dekorasyonu, özenli sunumları ve özel ürün seçenekleriyle sıradan bir kafeden çok daha fazlası…</blockquote><figcaption><span class="rev-av" aria-hidden="true">F</span><span>F. A.<span class="rev-stars" aria-label="5 yıldız">★★★★★</span></span></figcaption></figure>
+          <figure class="rev"><span class="rev-mark" aria-hidden="true">“</span><blockquote>Nefis kahvaltı ve harika personel! Açılış öncesi deneme sürecinde birkaç kez ziyaret ettik ve her seferinde çok keyif aldık. Harika yemekler, güler yüzlü hizmet ve hoş bir atmosfer. Kesinlikle tekrar geleceğiz!</blockquote><figcaption><span class="rev-av" aria-hidden="true">A</span><span>A. M.<span class="rev-stars" aria-label="5 yıldız">★★★★★</span></span></figcaption></figure>
+          <figure class="rev"><span class="rev-mark" aria-hidden="true">“</span><blockquote>Zarif ikramları ve bizimle ilgilenen hanımefendilerin naifliği ve ilgisi için çok teşekkür ederim.</blockquote><figcaption><span class="rev-av" aria-hidden="true">E</span><span>E. Ç.<span class="rev-stars" aria-label="5 yıldız">★★★★★</span></span></figcaption></figure>
+        </div>
+        <p class="center"><a class="link" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lo%C3%A7ka%20Home%20%26%20P%C3%A2tisserie%20Beylikd%C3%BCz%C3%BC">Google’daki yorumlar</a></p>
       </div>
     </section>
 
@@ -832,6 +890,8 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     var deco = shown(data.dekorasyon);
     if (deco.length) document.getElementById('tileList').innerHTML = deco.map(function (t) { return '<li><h3>' + esc(t.name) + '</h3>' + (t.desc ? '<p>' + esc(t.desc) + '</p>' : '') + '</li>'; }).join('');
     var ord = shown(data.siparisler);
+    var choco = ord.filter(function (o) { return /çikolata/i.test(o.name); })[0];
+    if (choco && choco.desc) { var cp = document.getElementById('chocoPrices'); cp.textContent = choco.desc; cp.hidden = false; }
     if (ord.length) document.getElementById('orderList').innerHTML = ord.map(function (o) { return '<li><strong>' + esc(o.name) + '</strong>' + (o.desc ? '<span>' + esc(o.desc) + '</span>' : '') + '</li>'; }).join('');
   }
 
@@ -982,6 +1042,20 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 <script>
 /* Bu tasarımda yeni olan ifadeler (sözlüğe eklenir) */
 window.__S2 = [
+  ['Misafirlerimiz', 'Our guests', 'ضيوفنا'],
+  ['Misafirlerimizin sözleri', 'In our guests’ words', 'بكلمات ضيوفنا'],
+  ['Google’daki yorumlar', 'Reviews on Google', 'التقييمات على Google'],
+  ['5 yıldız', '5 stars', '5 نجوم'],
+  ['Fransız zarafetini her detayında hissettiren, hem kafe atmosferiyle hem de birbirinden güzel ürünleriyle büyüleyen harika bir mekân! Şık dekorasyonu, özenli sunumları ve özel ürün seçenekleriyle sıradan bir kafeden çok daha fazlası…', 'A wonderful place where you feel French elegance in every detail, enchanting both for its café atmosphere and its beautiful products! With its stylish décor, careful presentation and special selection, it is much more than an ordinary café…', 'مكان رائع تشعر فيه بالأناقة الفرنسية في كل تفصيل، يأسرك بأجواء المقهى ومنتجاته الجميلة! بديكوره الأنيق وتقديمه المتقن وتشكيلته المميزة، هو أكثر بكثير من مجرد مقهى…'],
+  ['Nefis kahvaltı ve harika personel! Açılış öncesi deneme sürecinde birkaç kez ziyaret ettik ve her seferinde çok keyif aldık. Harika yemekler, güler yüzlü hizmet ve hoş bir atmosfer. Kesinlikle tekrar geleceğiz!', 'Delicious breakfast and great staff! We visited several times during their soft opening and really enjoyed it every time. Great food, friendly service, and a lovely atmosphere. Would definitely come back!', 'فطور شهي وطاقم رائع! زرناهم عدة مرات خلال فترة الافتتاح التجريبي واستمتعنا في كل مرة. طعام رائع وخدمة ودودة وأجواء جميلة. سنعود بالتأكيد!'],
+  ['Zarif ikramları ve bizimle ilgilenen hanımefendilerin naifliği ve ilgisi için çok teşekkür ederim.', 'Thank you so much for the elegant treats and for the kindness and care of the ladies who looked after us.', 'شكرًا جزيلًا على الضيافة الأنيقة وعلى لطف واهتمام السيدات اللواتي اعتنين بنا.'],
+  ['Hediyelik', 'Gifts', 'هدايا'],
+  ['Çikolata kutuları', 'Chocolate boxes', 'علب الشوكولاتة'],
+  ['Mackenzie-Childs’ın renkli kutularında, farklı tatlarda çikolatalar: fıstıklı, ahududulu ve hindistan cevizli trüfler, çikolata kaplı portakal dilimleri.', 'Chocolates in a range of flavours, packed in Mackenzie-Childs’ colourful boxes: pistachio, raspberry and coconut truffles, and chocolate-dipped orange slices.', 'شوكولاتة بنكهات متنوّعة في علب Mackenzie-Childs الملوّنة: ترافل بالفستق والتوت وجوز الهند، وشرائح برتقال مغطّاة بالشوكولاتة.'],
+  ['Sipariş için Instagram’dan yazın', 'Message us on Instagram to order', 'للطلب راسلونا على إنستغرام'],
+  ['Mackenzie-Childs kutusunda trüf ve çikolatalar', 'Truffles and chocolates in a Mackenzie-Childs box', 'ترافل وشوكولاتة في علبة Mackenzie-Childs'],
+  ['Fıstıklı, ahududulu ve hindistan cevizli trüfler', 'Pistachio, raspberry and coconut truffles', 'ترافل بالفستق والتوت وجوز الهند'],
+  ['Çiçek desenli Mackenzie-Childs kutuları', 'Floral Mackenzie-Childs boxes', 'علب Mackenzie-Childs المزهّرة'],
   ['Hakkımızda', 'About us', 'من نحن'],
   ['Galeri', 'Gallery', 'المعرض'],
   ['İletişim', 'Contact', 'تواصلوا معنا'],
