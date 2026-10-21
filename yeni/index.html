@@ -281,6 +281,83 @@ footer a { color: var(--on-red); }
 .photo-box figcaption { color: var(--on-red); text-align: center; font: italic 400 1.1rem var(--serif-text); margin-top: 12px; }
 .photo-close { position: fixed; top: 14px; inset-inline-end: 14px; width: 46px; height: 46px; border: 1px solid rgba(255,249,244,.4); background: rgba(27,10,15,.5); color: #fff; font-size: 1.6rem; line-height: 1; border-radius: 2px; cursor: pointer; }
 
+
+/* Ana sayfa: Kraken düzeninden esinlenen bölümler */
+.kicker { display: flex; align-items: center; justify-content: center; gap: 14px; font-size: .78rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--red-soft); margin-bottom: 18px; }
+.kicker::before, .kicker::after { content: ""; width: 32px; height: 1px; background: currentColor; opacity: .7; }
+.center { text-align: center; }
+.story { text-align: center; padding: clamp(56px, 9vw, 112px) 0; }
+.story-quote { font: italic 400 clamp(2rem, 6vw, 3.4rem)/1.15 var(--serif-text); color: var(--red); max-width: 16em; margin: 0 auto 22px; }
+.story-text { color: var(--mute); max-width: 34em; margin: 0 auto 18px; font-size: 1.05rem; }
+.pillars { list-style: none; padding: 0; margin: clamp(36px, 6vw, 64px) 0 0; display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); text-align: start; }
+.pillars li + li { border-inline-start: 1px solid var(--line); }
+.pillars a { display: block; height: 100%; padding: 28px 22px; text-decoration: none; transition: background-color .25s; }
+.pillars a:hover { background: var(--paper); }
+.pillars h3 { font: 400 1.35rem/1.25 var(--serif); color: var(--red); margin-bottom: 8px; }
+.pillars p { color: var(--mute); font-size: .92rem; }
+.signature { background: var(--paper); padding: clamp(56px, 9vw, 104px) 0; text-align: center; }
+.signature h2 { font: 400 clamp(2.2rem, 6vw, 3.4rem)/1.05 var(--serif); color: var(--ink); margin-bottom: clamp(28px, 5vw, 48px); }
+.sig-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: start; margin-bottom: 40px; }
+.sig { background: var(--porcelain); border: 1px solid var(--line); display: flex; flex-direction: column; }
+.sig button { padding: 0; border: 0; background: none; cursor: zoom-in; overflow: hidden; }
+.sig img { width: 100%; aspect-ratio: 4/5; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.sig button:hover img { transform: scale(1.04); }
+.sig-body { padding: 18px 18px 22px; display: grid; gap: 6px; }
+.sig-cat { font-size: .72rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--red-soft); }
+.sig h3 { font: 400 1.3rem/1.25 var(--serif); color: var(--ink); }
+.sig p { color: var(--mute); font-size: .92rem; }
+.sig .price { color: var(--red); font-weight: 500; }
+.share { background: var(--red-deep); color: var(--on-red); padding: clamp(56px, 9vw, 104px) 0; }
+.share .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
+.share img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.share .kicker { justify-content: flex-start; color: var(--on-red-soft); }
+.share .kicker::after { display: none; }
+.share h2 { font: 400 clamp(2.2rem, 6vw, 3.6rem)/1.05 var(--serif); margin-bottom: 18px; }
+.share-desc { color: var(--on-red-soft); font-size: 1.05rem; max-width: 32em; }
+.share-price { font: 400 1.6rem var(--serif-text); margin: 18px 0 26px; }
+footer { padding: clamp(48px, 7vw, 72px) 0 calc(28px + env(safe-area-inset-bottom)); }
+footer .foot-grid { display: grid; align-items: start; justify-content: stretch; }
+.foot-brand p + p { margin-top: 6px; }
+footer .foot-bottom { display: flex; }
+.foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.4fr 1.2fr; gap: 32px; align-items: start; }
+.foot-brand .mark { font-size: 1.5rem; display: inline-block; margin-bottom: 12px; }
+.foot-sign { font: italic 400 1.05rem var(--serif-text); color: var(--on-red); margin-top: 6px; }
+.foot-title { font-size: .74rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--on-red); margin-bottom: 14px; }
+.foot-links { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; }
+.foot-links a, footer a { color: var(--on-red-soft); text-decoration: none; display: inline-block; padding-block: 3px; }
+.foot-links a:hover, footer a:hover { color: var(--on-red); text-decoration: underline; text-underline-offset: 3px; }
+.foot-gap { margin-top: 10px; }
+.foot-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,249,244,.14); font-size: .8rem; }
+.kicker.left { justify-content: flex-start; }
+.kicker.left::after { display: none; }
+.sig-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 48px; text-align: start; margin-bottom: clamp(28px, 5vw, 48px); }
+.sig-head h2 { margin-bottom: 0; }
+.sig-head > p { color: var(--mute); max-width: 26em; }
+.sig-photo { position: relative; overflow: hidden; }
+.sig-photo button { display: block; width: 100%; }
+.sig-photo img { aspect-ratio: 4/5; }
+.sig-photo::after { content: ""; position: absolute; inset: 45% 0 0 0; background: linear-gradient(180deg, rgba(27,10,15,0), rgba(27,10,15,.78)); pointer-events: none; }
+.sig-photo .sig-cat { position: absolute; top: 14px; inset-inline-start: 14px; z-index: 1; background: var(--porcelain); color: var(--red); padding: 6px 10px 5px; font-size: .66rem; }
+.sig-photo h3 { position: absolute; inset-inline: 18px; bottom: 16px; z-index: 1; color: var(--on-red); font-size: 1.5rem; pointer-events: none; }
+.sig-row { grid-template-columns: repeat(3, 1fr); }
+.gal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.gal button { padding: 0; border: 0; background: var(--paper); cursor: zoom-in; overflow: hidden; }
+.gal img { width: 100%; aspect-ratio: 4/5; object-fit: cover; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+.gal button:hover img { transform: scale(1.04); }
+.gal-more { margin: 36px 0 clamp(56px, 8vw, 96px); }
+@media (max-width: 900px) {
+  .gal { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sig-row { grid-template-columns: none; grid-auto-columns: 80%; }
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .pillars li:nth-child(3) { border-inline-start: 0; }
+  .pillars li:nth-child(n+3) { border-top: 1px solid var(--line); }
+  .sig-row { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: -20px; padding-inline: 20px; }
+  .sig-row::-webkit-scrollbar { display: none; }
+  .sig { scroll-snap-align: start; }
+  .share .wrap { grid-template-columns: 1fr; }
+  .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  .foot-brand { grid-column: 1 / -1; }
+}
 /* Bilgisayar: dikey video büyütülünce bulanıklaşmasın; metin kırmızı zeminde, video sağda kendi oranında */
 @media (min-width: 1000px) {
   .hero { background: var(--red); align-items: center; }
@@ -322,7 +399,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 <!-- Karşılama: adres çubuğunda bir bölüm yoksa açılır (QR'dan #menu ile gelen doğrudan menüye düşer) -->
 <div class="gate" id="gate" hidden>
   <div class="film" aria-hidden="true">
-    <video id="gateVideo" muted playsinline loop preload="metadata" poster="../images/video/sofra.jpg"><source src="../images/video/sofra.mp4" type="video/mp4"></video>
+    <video id="gateVideo" muted playsinline loop disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback" tabindex="-1" preload="metadata" poster="../images/video/sofra.jpg"><source src="../images/video/sofra.mp4" type="video/mp4"></video>
   </div>
   <div class="gate-inner gate-in">
     <svg class="emblem" viewBox="0 0 60 120" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M30 118C30 92 31 72 30 54"/><path d="M30 96C19 90 13 79 15 68c10 4 15 15 15 28z"/><path d="M30 80c11-5 16-15 14-25-9 3-14 13-14 25z"/><path d="M30 54c-10-1-16-13-12-28 6 6 9 9 12 11 3-2 6-5 12-11 4 15-2 27-12 28z"/><path d="M30 37c-3-10-2-21 0-28 2 7 3 18 0 28z"/></svg>
@@ -345,11 +422,13 @@ html[lang="ar"] .door .no { padding-top: .2em; }
   <div class="wrap">
     <a class="mark" href="#anasayfa" aria-label="Loçka, ana sayfa">Loçka</a>
     <nav class="nav" aria-label="Ana menü">
+      <a href="#anasayfa">Ana sayfa</a>
+      <a href="#hikaye">Hakkımızda</a>
       <a href="#menu">Menü</a>
       <a href="#butik">Butik</a>
       <a href="#davetler">Davetler</a>
-      <a href="#hikaye">Hikâyemiz</a>
-      <a href="#ziyaret">Ziyaret</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#ziyaret">İletişim</a>
       <div class="lang" role="group" aria-label="Dil / Language / اللغة">
         <button type="button" data-lang="tr" lang="tr" aria-pressed="true">TR</button><span aria-hidden="true">·</span>
         <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button><span aria-hidden="true">·</span>
@@ -361,17 +440,18 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 </header>
 <nav class="sheet" id="sheet" aria-label="Bölümler" hidden>
   <a href="#anasayfa">Ana sayfa</a>
+  <a href="#hikaye">Hakkımızda</a>
   <a href="#menu">Menü</a>
   <a href="#butik">Butik</a>
   <a href="#davetler">Davetler</a>
-  <a href="#hikaye">Hikâyemiz</a>
-  <a href="#ziyaret">Ziyaret</a>
+  <a href="#galeri">Galeri</a>
+  <a href="#ziyaret">İletişim</a>
   <div class="lang" role="group" aria-label="Dil / Language / اللغة">
     <button type="button" data-lang="tr" lang="tr" aria-pressed="true">TR</button><span aria-hidden="true">·</span>
     <button type="button" data-lang="en" lang="en" aria-pressed="false">EN</button><span aria-hidden="true">·</span>
     <button type="button" data-lang="ar" lang="ar" aria-pressed="false" aria-label="العربية">ع</button>
   </div>
-  <p class="sheet-meta">Hürriyet Bulvarı, Beylikdüzü · Her gün 08.00–22.00</p>
+  <p class="sheet-meta">Hürriyet Bulvarı, Beylikdüzü · Her gün 08.00–22.00 · <a href="tel:+902128035686" style="color:inherit">0212 803 56 86</a></p>
 </nav>
 <div class="notice" id="notice" role="status" hidden></div>
 
@@ -380,7 +460,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
   <section class="view" data-view="anasayfa" aria-label="Ana sayfa">
     <div class="hero">
       <div class="film" aria-hidden="true">
-        <video id="heroVideo" muted playsinline loop preload="metadata" poster="../images/video/servis.jpg"><source src="../images/video/servis.mp4" type="video/mp4"></video>
+        <video id="heroVideo" muted playsinline loop disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback" tabindex="-1" preload="metadata" poster="../images/video/servis.jpg"><source src="../images/video/servis.mp4" type="video/mp4"></video>
       </div>
       <div class="wrap">
         <h1>Fransız lezzetleri, zamansız ev parçaları.</h1>
@@ -394,29 +474,45 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     <div class="hero-band"></div>
     <div class="feston" aria-hidden="true"></div>
 
-    <div class="doors">
+    <!-- Hikâyemiz: ortalı alıntı ve Loçka'nın dört yanı -->
+    <section class="story" aria-labelledby="storyTitle">
       <div class="wrap">
-        <p class="doors-intro">Hürriyet Bulvarı’nda, sofrası kendi porselenleriyle kurulan bir pâtisserie.</p>
-        <ul class="door-list">
-          <li class="door"><a href="#menu"><span class="no">01</span><div><h2>Menü</h2><p>Kahvaltı, pâtisserie, kahve ve moktailler; fiyatlarıyla.</p></div><img src="../images/instagram/hikaye-patisserie-5.jpg" alt="" loading="lazy"></a></li>
-          <li class="door"><a href="#butik"><span class="no">02</span><div><h2>Butik</h2><p>Sofradaki porselenler, gümüşler, mumlar ve çiçekler.</p></div><img src="../images/instagram/hikaye-dekor-1.jpg" alt="" loading="lazy"></a></li>
-          <li class="door"><a href="#davetler"><span class="no">03</span><div><h2>Davetler</h2><p>Doğum günü, nişan ve şirket davetleri için tatlı masaları ve pastalar.</p></div><img src="../images/instagram/hikaye-dekor-5.jpg" alt="" loading="lazy"></a></li>
-          <li class="door"><a href="#hikaye"><span class="no">04</span><div><h2>Hikâyemiz</h2><p>“Canım, tatlım, hayatım” ne demek, Loçka nasıl doğdu?</p></div><img src="../images/instagram/hikaye-locka-2.jpg" alt="" loading="lazy"></a></li>
+        <p class="kicker" id="storyTitle">Hikâyemiz</p>
+        <p class="story-quote">“Canım, tatlım, hayatım.”</p>
+        <p class="story-text">Sevdiklerimize seslenirken kullandığımız bu kelimeyi, en sevdiğimiz şeye ad olarak verdik: özenle kurulmuş bir sofraya ve o sofrada sizi ağırlamaya.</p>
+        <a class="link" href="#hikaye">Hikâyemizi okuyun</a>
+        <ul class="pillars">
+          <li><a href="#butik"><h3>Kendi porselenimiz</h3><p>Tabaklar, fincanlar ve gümüşler Loçka tasarımı.</p></a></li>
+          <li><a href="#menu"><h3>Pâtisserie</h3><p>Fransız pâtisserie geleneğiyle, her gün.</p></a></li>
+          <li><a href="#butik"><h3>Butik</h3><p>Sofradakini evinize götürebilirsiniz.</p></a></li>
+          <li><a href="#davetler"><h3>Davetler</h3><p>Tatlı masaları ve kişiye özel menüler.</p></a></li>
         </ul>
       </div>
-    </div>
+    </section>
 
-    <section class="reel" aria-labelledby="reelTitle">
-      <div class="wrap reel-head">
-        <h2 id="reelTitle">Pâtisserie</h2>
-        <a class="link" href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">Instagram’da daha fazlası</a>
+    <!-- Öne çıkanlar: menü verisinden (fotoğraflı ürünler) -->
+    <section class="signature" aria-labelledby="sigTitle" id="homePicksWrap" hidden>
+      <div class="wrap">
+        <div class="sig-head">
+          <div><p class="kicker left">Menüden</p><h2 id="sigTitle">En sevilenler</h2></div>
+          <p>Vitrinden ve mutfaktan, misafirlerimizin en çok sorduğu lezzetler.</p>
+        </div>
+        <div class="sig-row" id="homePicks"></div>
+        <p class="center"><a class="btn red" href="#menu">Menünün tamamı</a></p>
       </div>
-      <div class="reel-row">
-        <figure><img src="../images/instagram/hikaye-patisserie-4.jpg" alt="Ahududulu Paris-Brest" loading="lazy"><figcaption>Paris-Brest</figcaption></figure>
-        <figure><img src="../images/instagram/hikaye-patisserie-6.jpg" alt="Çiçeklerle süslenmiş katlı pasta dilimi" loading="lazy"><figcaption>Opera Cake</figcaption></figure>
-        <figure><img src="../images/instagram/hikaye-patisserie-2.jpg" alt="Kırmızı frenk üzümlü bordo tatlılar" loading="lazy"><figcaption>Raspberry White Chocolate</figcaption></figure>
-        <figure><img src="../images/instagram/hikaye-patisserie-3.jpg" alt="Çikolatalı dilim pasta" loading="lazy"><figcaption>Snickers Cake</figcaption></figure>
-        <figure><img src="../images/instagram/hikaye-patisserie-5.jpg" alt="Kat kat pasta dilimi" loading="lazy"><figcaption>Loçka Cake</figcaption></figure>
+    </section>
+
+    <!-- Paylaşımlık: menüde paylaşımlık işaretli ürün -->
+    <section class="share" aria-labelledby="shareTitle" id="homeShare" hidden>
+      <div class="wrap">
+        <img id="shareImg" src="data:," alt="" loading="lazy">
+        <div>
+          <p class="kicker">Paylaşımlık</p>
+          <h2 id="shareTitle"></h2>
+          <p class="share-desc" id="shareDesc"></p>
+          <p class="share-price" id="sharePrice"></p>
+          <a class="btn fill" href="#menu">Menüde görün</a>
+        </div>
       </div>
     </section>
 
@@ -428,6 +524,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
           <dl class="facts">
             <div><dt>Adres</dt><dd>Marmara Mah. Hürriyet Bulvarı, Kocatepe Cad. No: 132E<br>Yakuplu, Beylikdüzü / İstanbul</dd></div>
             <div><dt>Çalışma saatleri</dt><dd>Haftanın her günü 08.00–22.00</dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:+902128035686">0212 803 56 86</a></dd></div>
           </dl>
           <div class="acts">
             <a class="btn fill" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lo%C3%A7ka%20Home%20%26%20P%C3%A2tisserie%20Beylikd%C3%BCz%C3%BC">Yol tarifi al</a>
@@ -509,7 +606,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 
   <!-- Hikâye -->
   <section class="view" data-view="hikaye" aria-labelledby="hikayeTitle" hidden>
-    <div class="page-head"><div class="wrap"><h1 id="hikayeTitle">Hikâyemiz</h1></div></div>
+    <div class="page-head"><div class="wrap"><h1 id="hikayeTitle">Hakkımızda</h1></div></div>
     <div class="feston" aria-hidden="true"></div>
     <div class="wrap split">
       <figure class="photo" style="margin:0"><img src="../images/magaza-ic.jpg" alt="Loçka mağazasının içi, porselenler ve dekorasyon ürünleri"></figure>
@@ -527,9 +624,36 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     </div>
   </section>
 
+  <!-- Galeri: Loçka'nın Instagram fotoğrafları -->
+  <section class="view" data-view="galeri" aria-labelledby="galeriTitle" hidden>
+    <div class="page-head"><div class="wrap"><h1 id="galeriTitle">Galeri</h1><p>Sofralarımızdan, vitrinimizden ve butiğimizden.</p></div></div>
+    <div class="feston" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="gal">
+        <button type="button" data-photo="../images/instagram/hikaye-dekor-2.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-dekor-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-patisserie-4.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-patisserie-4.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-locka-2.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-locka-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-dekor-1.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-dekor-1.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-icecek-3.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-icecek-3.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-patisserie-6.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-patisserie-6.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-dekor-5.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-dekor-5.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-icecek-1.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-icecek-1.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-patisserie-2.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-patisserie-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-dekor-4.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-dekor-4.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-locka-1.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-locka-1.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-icecek-4.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-icecek-4.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-patisserie-3.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-patisserie-3.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-dekor-3.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-dekor-3.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-icecek-5.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-icecek-5.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-photo="../images/instagram/hikaye-patisserie-5.jpg" data-caption="Loçka" aria-label="Fotoğrafı büyüt"><img src="../images/instagram/hikaye-patisserie-5.jpg" alt="" loading="lazy"></button>
+      </div>
+      <p class="center gal-more"><a class="btn red" href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">Instagram’da daha fazlası</a></p>
+    </div>
+  </section>
+
   <!-- Ziyaret -->
   <section class="view" data-view="ziyaret" aria-labelledby="ziyaretTitle" hidden>
-    <div class="page-head"><div class="wrap"><h1 id="ziyaretTitle">Ziyaret</h1></div></div>
+    <div class="page-head"><div class="wrap"><h1 id="ziyaretTitle">İletişim</h1></div></div>
     <div class="feston" aria-hidden="true" style="margin-bottom:0"></div>
     <section class="visit" style="background:var(--porcelain);color:var(--ink)">
       <div class="wrap">
@@ -539,6 +663,7 @@ html[lang="ar"] .door .no { padding-top: .2em; }
           <dl class="facts visit-facts">
             <div><dt>Adres</dt><dd>Marmara Mah. Hürriyet Bulvarı, Kocatepe Cad. No: 132E<br>Yakuplu, Beylikdüzü / İstanbul</dd></div>
             <div><dt>Çalışma saatleri</dt><dd>Haftanın her günü 08.00–22.00</dd></div>
+            <div><dt>Telefon</dt><dd><a href="tel:+902128035686">0212 803 56 86</a></dd></div>
             <div><dt>Rezervasyon ve sorular</dt><dd>Instagram'dan mesaj: <a href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">@lockahome</a></dd></div>
           </dl>
           <div class="acts">
@@ -557,10 +682,40 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 </dialog>
 
 <footer>
-  <div class="wrap">
-    <span class="mark">Loçka</span>
-    <span>Hürriyet Bulvarı, Beylikdüzü · Her gün 08.00–22.00</span>
-    <a href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">@lockahome</a>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <span class="mark">Loçka</span>
+      <p class="foot-sign">Beautiful things to live with.</p>
+      <p>Hürriyet Bulvarı’nda kahvaltı, pâtisserie ve dekorasyon butiği.</p>
+    </div>
+    <div>
+      <p class="foot-title">Keşfedin</p>
+      <ul class="foot-links">
+        <li><a href="#anasayfa">Ana sayfa</a></li>
+        <li><a href="#hikaye">Hakkımızda</a></li>
+        <li><a href="#menu">Menü</a></li>
+        <li><a href="#butik">Butik</a></li>
+        <li><a href="#davetler">Davetler</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#ziyaret">İletişim</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="foot-title">Saatler</p>
+      <p>Haftanın her günü<br>08.00–22.00</p>
+    </div>
+    <div>
+      <p class="foot-title">Takip edin</p>
+      <ul class="foot-links">
+        <li><a href="https://www.instagram.com/lockahome/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="tel:+902128035686">0212 803 56 86</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Lo%C3%A7ka%20Home%20%26%20P%C3%A2tisserie%20Beylikd%C3%BCz%C3%BC">Yol tarifi al</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 Loçka Home & Pâtisserie · Tüm hakları saklıdır</span>
+    <span>Hürriyet Bulvarı · Beylikdüzü · İstanbul</span>
   </div>
 </footer>
 
@@ -582,10 +737,24 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     if (on && !reduce) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
     else v.pause();
   }
+  // Instagram videolarının sonunda logo kartı var; video o kareye gelmeden başa döner
+  var CUT = { heroVideo: 24.3, gateVideo: 19.8 };
+  Object.keys(CUT).forEach(function (id) {
+    var v = document.getElementById(id);
+    if (!v) return;
+    v.loop = false;
+    function again() { v.currentTime = 0; if (!v.paused || v.ended) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } }
+    v.addEventListener('timeupdate', function () { if (v.currentTime >= CUT[id]) again(); });
+    v.addEventListener('ended', again);
+    if (v.requestVideoFrameCallback) {
+      var tick = function (now, m) { if (m.mediaTime >= CUT[id]) again(); v.requestVideoFrameCallback(tick); };
+      v.requestVideoFrameCallback(tick);
+    }
+  });
 
   // Görünümler: her bölüm ayrı bir sayfa gibi
-  var VIEWS = ['anasayfa', 'menu', 'butik', 'davetler', 'hikaye', 'ziyaret'];
-  var ALIAS = { '': 'anasayfa', sofra: 'anasayfa', patisserie: 'anasayfa', moktailler: 'menu' };
+  var VIEWS = ['anasayfa', 'menu', 'butik', 'davetler', 'hikaye', 'galeri', 'ziyaret'];
+  var ALIAS = { '': 'anasayfa', sofra: 'anasayfa', patisserie: 'anasayfa', moktailler: 'menu', hakkimizda: 'hikaye', iletisim: 'ziyaret' };
   var gate = document.getElementById('gate');
   var top = document.getElementById('top');
   var current = null;
@@ -640,7 +809,8 @@ html[lang="ar"] .door .no { padding-top: .2em; }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) { setSheet(false); burger.focus(); } });
   matchMedia('(min-width: 901px)').addEventListener('change', function (m) { if (m.matches) setSheet(false); });
 
-  if (!location.hash) {
+  // Karşılama her açılışta gelir; masadaki QR (#menu) doğrudan menüye düşer
+  if (!/^#(menu|moktailler)$/.test(location.hash)) {
     gate.hidden = false;
     document.body.style.overflow = 'hidden';
     play(document.getElementById('gateVideo'), true);
@@ -747,6 +917,23 @@ html[lang="ar"] .door .no { padding-top: .2em; }
         return '<article class="pick">' + photoBtn(i, '', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') + '<h3>' + esc(i.name) + '</h3><span class="price">' + esc(price(i.price, show)) + '</span></article>';
       }).join('');
       document.getElementById('menuPicks').hidden = false;
+      var catOf = function (it) { var c = cats.filter(function (c) { return c.items.indexOf(it) >= 0; })[0]; return c ? c.name : ''; };
+      document.getElementById('homePicks').innerHTML = picks.slice(0, 3).map(function (i) {
+        return '<article class="sig"><div class="sig-photo">' + photoBtn(i, '', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') +
+          '<span class="sig-cat">' + esc(catOf(i)) + '</span><h3>' + esc(i.name) + '</h3></div>' +
+          '<div class="sig-body">' + (i.desc ? '<p>' + esc(i.desc) + '</p>' : '') + '<span class="price">' + esc(price(i.price, show)) + '</span></div></article>';
+      }).join('');
+      document.getElementById('homePicksWrap').hidden = false;
+    }
+    var shareItem = null;
+    cats.forEach(function (c) { c.items.forEach(function (i) { if (!shareItem && i.visible !== false && i.image && PAYLASIMLIK.indexOf(i.name) >= 0) shareItem = i; }); });
+    if (shareItem) {
+      document.getElementById('shareImg').src = img(shareItem.image);
+      document.getElementById('shareImg').alt = shareItem.name;
+      document.getElementById('shareTitle').textContent = shareItem.name;
+      document.getElementById('shareDesc').textContent = shareItem.desc || '';
+      document.getElementById('sharePrice').textContent = price(shareItem.price, show);
+      document.getElementById('homeShare').hidden = false;
     }
     tabs.innerHTML = cats.map(function (c, i) { return '<button type="button" role="tab" id="tab-' + i + '">' + esc(c.name) + '</button>'; }).join('');
     function toPanel() {
@@ -794,6 +981,37 @@ html[lang="ar"] .door .no { padding-top: .2em; }
 <script>
 /* Bu tasarımda yeni olan ifadeler (sözlüğe eklenir) */
 window.__S2 = [
+  ['Hakkımızda', 'About us', 'من نحن'],
+  ['Galeri', 'Gallery', 'المعرض'],
+  ['İletişim', 'Contact', 'تواصلوا معنا'],
+  ['Sofralarımızdan, vitrinimizden ve butiğimizden.', 'From our tables, our pastry counter and our boutique.', 'من موائدنا وواجهة حلوياتنا والبوتيك.'],
+  ['Fotoğrafı büyüt', 'Enlarge photo', 'تكبير الصورة'],
+  ['En sevilenler', 'Guest favourites', 'الأكثر طلبًا'],
+  ['Vitrinden ve mutfaktan, misafirlerimizin en çok sorduğu lezzetler.', 'From the pastry counter and the kitchen, the dishes our guests ask for most.', 'من واجهة الحلويات والمطبخ، الأطباق التي يسأل عنها ضيوفنا أكثر.'],
+  ['Telefon', 'Phone', 'الهاتف'],
+  ['Saatler', 'Hours', 'الساعات'],
+  ['Haftanın her günü', 'Every day', 'يوميًا'],
+  ['Hürriyet Bulvarı’nda kahvaltı, pâtisserie ve dekorasyon butiği.', 'Breakfast, pâtisserie and a décor boutique on Hürriyet Boulevard.', 'فطور وباتيسري وبوتيك ديكور في شارع حريّت.'],
+  ['© 2026 Loçka Home & Pâtisserie · Tüm hakları saklıdır', '© 2026 Loçka Home & Pâtisserie · All rights reserved', '\u2066© 2026 Loçka Home & Pâtisserie\u2069 · جميع الحقوق محفوظة'],
+  ['Hürriyet Bulvarı · Beylikdüzü · İstanbul', 'Hürriyet Boulevard · Beylikdüzü · Istanbul', 'شارع حريّت · بيليكدوزو · إسطنبول'],
+  ['Yol tarifi al', 'Get directions', 'الاتجاهات على الخريطة'],
+  ['Instagram', 'Instagram', 'إنستغرام'],
+  ['Hikâyemizi okuyun', 'Read our story', 'اقرؤوا قصتنا'],
+  ['Kendi porselenimiz', 'Our own porcelain', 'خزفنا الخاص'],
+  ['Tabaklar, fincanlar ve gümüşler Loçka tasarımı.', 'Plates, cups and silverware designed by Loçka.', 'الأطباق والفناجين والفضيات من تصميم Loçka.'],
+  ['Fransız pâtisserie geleneğiyle, her gün.', 'Made in the French pâtisserie tradition, every day.', 'على طريقة الباتيسري الفرنسية، كل يوم.'],
+  ['Sofradakini evinize götürebilirsiniz.', 'Take home what you see on the table.', 'خذوا ما ترونه على المائدة إلى منزلكم.'],
+  ['Tatlı masaları ve kişiye özel menüler.', 'Dessert tables and personalised menus.', 'طاولات حلويات وقوائم مخصّصة.'],
+  ['Menüden', 'From the menu', 'من القائمة'],
+  ['Menünün tamamı', 'The full menu', 'القائمة كاملة'],
+  ['Paylaşımlık', 'To share', 'للمشاركة'],
+  ['Menüde görün', 'See it on the menu', 'شاهدوه في القائمة'],
+  ['Keşfedin', 'Explore', 'استكشفوا'],
+  ['Takip edin', 'Follow us', 'تابعونا'],
+  ['Instagram · @lockahome', 'Instagram · @lockahome', 'إنستغرام · \u2066@lockahome\u2069'],
+  ["Rezervasyon ve sipariş için Instagram'dan mesaj gönderebilirsiniz.", 'For reservations and orders, send us a message on Instagram.', 'للحجوزات والطلبات، راسلونا على إنستغرام.'],
+  ['© 2026 Loçka Home & Pâtisserie', '© 2026 Loçka Home & Pâtisserie', '\u2066© 2026 Loçka Home & Pâtisserie\u2069'],
+  ['Beylikdüzü, İstanbul', 'Beylikdüzü, Istanbul', 'بيليكدوزو، إسطنبول'],
   ['Ana sayfa', 'Home', 'الرئيسية'],
   ['Her gün 08.00–22.00', 'Every day, 8 am – 10 pm', 'يوميًا من الثامنة صباحًا حتى العاشرة مساءً'],
   ['Hürriyet Bulvarı, Beylikdüzü · Her gün 08.00–22.00', 'Hürriyet Boulevard, Beylikdüzü · Every day, 8 am – 10 pm', 'شارع حريّت، بيليكدوزو · يوميًا من الثامنة صباحًا حتى العاشرة مساءً'],
