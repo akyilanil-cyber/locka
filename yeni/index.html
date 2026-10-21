@@ -192,7 +192,7 @@ html[dir="rtl"] .link:hover::after { transform: translateX(-4px); }
 /* Ziyaret şeridi (ana sayfa ve ziyaret sayfası) */
 .visit { background: var(--red); color: var(--on-red); padding: clamp(48px, 8vw, 96px) 0; }
 .visit .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
-.visit img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px; }
+.visit img { width: 100%; max-width: 520px; aspect-ratio: 4/5; object-fit: cover; border-radius: 2px; justify-self: end; }
 .visit h2 { font: 400 clamp(2.4rem, 6vw, 3.8rem)/1.02 var(--serif); margin-bottom: 26px; }
 .facts { margin: 0 0 30px; display: grid; gap: 18px; }
 .facts dt { font-size: .8rem; font-weight: 600; letter-spacing: .08em; color: var(--on-red-soft); margin-bottom: 2px; }
@@ -309,14 +309,14 @@ footer a { color: var(--on-red); }
 .sig .price { color: var(--red); font-weight: 500; }
 .share { background: var(--red-deep); color: var(--on-red); padding: clamp(56px, 9vw, 104px) 0; }
 .share .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 6vw, 80px); align-items: center; }
-.share img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.share img { width: 100%; max-width: 520px; aspect-ratio: 1; object-fit: cover; justify-self: end; }
 .share .kicker { justify-content: flex-start; color: var(--on-red-soft); }
 .share .kicker::after { display: none; }
 .share h2 { font: 400 clamp(2.2rem, 6vw, 3.6rem)/1.05 var(--serif); margin-bottom: 18px; }
 .share-desc { color: var(--on-red-soft); font-size: 1.05rem; max-width: 32em; }
 .share-price { font: 400 1.6rem var(--serif-text); margin: 18px 0 26px; }
 footer { padding: clamp(48px, 7vw, 72px) 0 calc(28px + env(safe-area-inset-bottom)); }
-footer .foot-grid { display: grid; align-items: start; justify-content: stretch; }
+footer .foot-grid { display: grid; align-items: start; justify-content: stretch; gap: 40px 32px; }
 .foot-brand p + p { margin-top: 6px; }
 footer .foot-bottom { display: flex; }
 .foot-grid { display: grid; grid-template-columns: 1.3fr 1fr 1.4fr 1.2fr; gap: 32px; align-items: start; }
@@ -354,8 +354,9 @@ footer .foot-bottom { display: flex; }
   .sig-row { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: -20px; padding-inline: 20px; }
   .sig-row::-webkit-scrollbar { display: none; }
   .sig { scroll-snap-align: start; }
+  .sig-row { scroll-padding-inline: 20px; }
   .share .wrap { grid-template-columns: 1fr; }
-  .foot-grid { grid-template-columns: 1fr 1fr; gap: 32px 20px; }
+  footer .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
   .foot-brand { grid-column: 1 / -1; }
 }
 /* Bilgisayar: dikey video büyütülünce bulanıklaşmasın; metin kırmızı zeminde, video sağda kendi oranında */
@@ -490,18 +491,6 @@ html[lang="ar"] .door .no { padding-top: .2em; }
       </div>
     </section>
 
-    <!-- Öne çıkanlar: menü verisinden (fotoğraflı ürünler) -->
-    <section class="signature" aria-labelledby="sigTitle" id="homePicksWrap" hidden>
-      <div class="wrap">
-        <div class="sig-head">
-          <div><p class="kicker left">Menüden</p><h2 id="sigTitle">En sevilenler</h2></div>
-          <p>Vitrinden ve mutfaktan, misafirlerimizin en çok sorduğu lezzetler.</p>
-        </div>
-        <div class="sig-row" id="homePicks"></div>
-        <p class="center"><a class="btn red" href="#menu">Menünün tamamı</a></p>
-      </div>
-    </section>
-
     <!-- Paylaşımlık: menüde paylaşımlık işaretli ürün -->
     <section class="share" aria-labelledby="shareTitle" id="homeShare" hidden>
       <div class="wrap">
@@ -513,6 +502,18 @@ html[lang="ar"] .door .no { padding-top: .2em; }
           <p class="share-price" id="sharePrice"></p>
           <a class="btn fill" href="#menu">Menüde görün</a>
         </div>
+      </div>
+    </section>
+
+    <!-- Öne çıkanlar: menü verisinden (fotoğraflı ürünler) -->
+    <section class="signature" aria-labelledby="sigTitle" id="homePicksWrap" hidden>
+      <div class="wrap">
+        <div class="sig-head">
+          <div><p class="kicker left">Menüden</p><h2 id="sigTitle">En sevilenler</h2></div>
+          <p>Vitrinden ve mutfaktan, misafirlerimizin en çok sorduğu lezzetler.</p>
+        </div>
+        <div class="sig-row" id="homePicks"></div>
+        <p class="center"><a class="btn red" href="#menu">Menünün tamamı</a></p>
       </div>
     </section>
 
@@ -904,6 +905,16 @@ html[lang="ar"] .door .no { padding-top: .2em; }
     search.addEventListener('input', runSearch);
     search.addEventListener('keydown', function (e) { if (e.key === 'Escape') { search.value = ''; open(cur); } });
 
+    var shareItem = null;
+    cats.forEach(function (c) { c.items.forEach(function (i) { if (!shareItem && i.visible !== false && i.image && PAYLASIMLIK.indexOf(i.name) >= 0) shareItem = i; }); });
+    if (shareItem) {
+      document.getElementById('shareImg').src = img(shareItem.image);
+      document.getElementById('shareImg').alt = shareItem.name;
+      document.getElementById('shareTitle').textContent = shareItem.name;
+      document.getElementById('shareDesc').textContent = shareItem.desc || '';
+      document.getElementById('sharePrice').textContent = price(shareItem.price, show);
+      document.getElementById('homeShare').hidden = false;
+    }
     // Öne çıkanlar: fotoğraflı ürünlerden, kategorilerden sırayla
     var pools = cats.map(function (c) {
       return c.items.filter(function (i) { return i.visible !== false && i.image; }).sort(function (a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
@@ -918,22 +929,12 @@ html[lang="ar"] .door .no { padding-top: .2em; }
       }).join('');
       document.getElementById('menuPicks').hidden = false;
       var catOf = function (it) { var c = cats.filter(function (c) { return c.items.indexOf(it) >= 0; })[0]; return c ? c.name : ''; };
-      document.getElementById('homePicks').innerHTML = picks.slice(0, 3).map(function (i) {
+      document.getElementById('homePicks').innerHTML = picks.filter(function (p) { return p !== shareItem; }).slice(0, 3).map(function (i) {
         return '<article class="sig"><div class="sig-photo">' + photoBtn(i, '', '<img src="' + esc(img(i.image)) + '" alt="" loading="lazy">') +
           '<span class="sig-cat">' + esc(catOf(i)) + '</span><h3>' + esc(i.name) + '</h3></div>' +
           '<div class="sig-body">' + (i.desc ? '<p>' + esc(i.desc) + '</p>' : '') + '<span class="price">' + esc(price(i.price, show)) + '</span></div></article>';
       }).join('');
       document.getElementById('homePicksWrap').hidden = false;
-    }
-    var shareItem = null;
-    cats.forEach(function (c) { c.items.forEach(function (i) { if (!shareItem && i.visible !== false && i.image && PAYLASIMLIK.indexOf(i.name) >= 0) shareItem = i; }); });
-    if (shareItem) {
-      document.getElementById('shareImg').src = img(shareItem.image);
-      document.getElementById('shareImg').alt = shareItem.name;
-      document.getElementById('shareTitle').textContent = shareItem.name;
-      document.getElementById('shareDesc').textContent = shareItem.desc || '';
-      document.getElementById('sharePrice').textContent = price(shareItem.price, show);
-      document.getElementById('homeShare').hidden = false;
     }
     tabs.innerHTML = cats.map(function (c, i) { return '<button type="button" role="tab" id="tab-' + i + '">' + esc(c.name) + '</button>'; }).join('');
     function toPanel() {
